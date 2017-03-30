@@ -5,15 +5,6 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://github.com/CuBoulder/cu-express-drops-8"
-    }
-  ],
-  "require-dev": {
-
-  },
   "require": {
     "michelf/php-markdown": "^1.7.0"
   }
