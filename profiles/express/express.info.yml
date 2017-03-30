@@ -1,0 +1,51 @@
+name: Express
+type: profile
+description: 'Express installation profile'
+core: 8.x
+distribution:
+  name: Express
+
+# Required modules
+dependencies:
+  # Core required?
+  - node
+  - history
+  - block
+  - block_content
+  - breakpoint
+  - color
+  - config
+  - comment
+  - contextual
+  - contact
+  - quickedit
+  - help
+  - image
+  - options
+  - path
+  - taxonomy
+  - dblog
+  - search
+  - shortcut
+  - toolbar
+  - field_ui
+  - file
+  - rdf
+  - views
+  - views_ui
+  - editor
+  - ckeditor
+  # Express modules
+  - cu_site_info
+  - cu_back_to_top
+  # Contrib modules for Bulletin
+  - webform
+  - webform_views
+
+themes:
+  - bartik
+  - seven
+  # Contrib required
+  - bootstrap
+  # CU-Boulder theme
+  - fiddlers_green
