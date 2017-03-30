@@ -4,6 +4,7 @@ namespace Drupal\Core\Config;
 
 use Drupal\Core\Extension\ExtensionDiscovery;
 use Drupal\Core\Extension\Extension;
+use Drupal\Core\Extension\ProfileHandlerInterface;
 
 /**
  * Storage used by the Drupal installer.
@@ -48,6 +49,13 @@ class InstallStorage extends FileStorage {
   protected $directory;
 
   /**
+   * The profile handler used to find additional folders to scan for config.
+   *
+   * @var \Drupal\Core\Extension\ProfileHandlerInterface
+   */
+  protected $profileHandler;
+
+  /**
    * Constructs an InstallStorage object.
    *
    * @param string $directory
@@ -56,9 +64,12 @@ class InstallStorage extends FileStorage {
    * @param string $collection
    *   (optional) The collection to store configuration in. Defaults to the
    *   default collection.
+   * @param \Drupal\Core\Extension\ProfileHandlerInterface $profile_handler
+   *   (optional) The profile handler.
    */
-  public function __construct($directory = self::CONFIG_INSTALL_DIRECTORY, $collection = StorageInterface::DEFAULT_COLLECTION) {
+  public function __construct($directory = self::CONFIG_INSTALL_DIRECTORY, $collection = StorageInterface::DEFAULT_COLLECTION, ProfileHandlerInterface $profile_handler = NULL) {
     parent::__construct($directory, $collection);
+    $this->profileHandler = $profile_handler ?: \Drupal::service('profile_handler');
   }
 
   /**
@@ -151,6 +162,8 @@ class InstallStorage extends FileStorage {
     if (!isset($this->folders)) {
       $this->folders = [];
       $this->folders += $this->getCoreNames();
+      // Get dependent profiles and add the extension components.
+      $this->folders += $this->getComponentNames($this->profileHandler->getProfiles());
       // Perform an ExtensionDiscovery scan as we cannot use drupal_get_path()
       // yet because the system module may not yet be enabled during install.
       // @todo Remove as part of https://www.drupal.org/node/2186491

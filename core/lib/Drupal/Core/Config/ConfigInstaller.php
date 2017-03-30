@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\Entity\ConfigDependencyManager;
 use Drupal\Core\Config\Entity\ConfigEntityDependency;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConfigInstaller implements ConfigInstallerInterface {
@@ -53,6 +54,13 @@ class ConfigInstaller implements ConfigInstallerInterface {
   protected $sourceStorage;
 
   /**
+   * The profile handler.
+   *
+   * @var \Drupal\Core\Extension\ProfileHandlerInterface
+   */
+  protected $profileHandler;
+
+  /**
    * Is configuration being created as part of a configuration sync.
    *
    * @var bool
@@ -83,6 +91,7 @@ class ConfigInstaller implements ConfigInstallerInterface {
    *   The name of the currently active installation profile.
    */
   public function __construct(ConfigFactoryInterface $config_factory, StorageInterface $active_storage, TypedConfigManagerInterface $typed_config, ConfigManagerInterface $config_manager, EventDispatcherInterface $event_dispatcher, $install_profile) {
+
     $this->configFactory = $config_factory;
     $this->activeStorages[$active_storage->getCollectionName()] = $active_storage;
     $this->typedConfig = $typed_config;
@@ -471,7 +480,8 @@ class ConfigInstaller implements ConfigInstallerInterface {
 
     // Install profiles can not have config clashes. Configuration that
     // has the same name as a module's configuration will be used instead.
-    if ($name != $this->drupalGetProfile()) {
+    $profiles = $this->profileHandler->getProfiles();
+    if (!isset($profiles[$name])) {
       // Throw an exception if the module being installed contains configuration
       // that already exists. Additionally, can not continue installing more
       // modules because those may depend on the current module being installed.
