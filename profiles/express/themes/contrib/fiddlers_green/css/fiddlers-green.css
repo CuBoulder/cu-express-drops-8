@@ -267,6 +267,56 @@ section {
   font-family: "Neue Helvetica W01", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* line 1, ../scss/_bulletin.scss */
+.bulletin-title {
+  margin-bottom: -20px;
+}
+
+/* line 4, ../scss/_bulletin.scss */
+.bulletin-image {
+  float: left;
+  margin: 0 2% 2% 0;
+}
+
+/* line 11, ../scss/_bulletin.scss */
+.bulletin-footer {
+  clear: both;
+  background: #f7f7f7;
+  margin-top: 1%;
+  padding: 1%;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+/* line 18, ../scss/_bulletin.scss */
+.form-inline .form-control {
+  width: 100% !important;
+}
+
+/* line 21, ../scss/_bulletin.scss */
+#edit-webform-submission-value-1--2.form-control {
+  font-size: 20px;
+}
+
+/* line 25, ../scss/_bulletin.scss */
+div.webform-options-display-one-column .form-item, div#edit-webform-submission-value-1--2--wrapper .form-item {
+  margin-right: 26%;
+}
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 768px) {
+  /* line 31, ../scss/_bulletin.scss */
+  div.view-filters {
+    float: right;
+    width: 24%;
+    overflow: hidden;
+  }
+
+  /* line 36, ../scss/_bulletin.scss */
+  div.view-content {
+    float: left;
+    width: 74%;
+  }
+}
 /* line 1, ../scss/components/_blocks.scss */
 .block {
   margin-bottom: 20px;
@@ -281,6 +331,19 @@ section {
 /* line 8, ../scss/components/_blocks.scss */
 .new-block-row {
   clear: both;
+}
+
+/* line 11, ../scss/components/_blocks.scss */
+#block-logintocreatebulletins, #block-viewmysubmissions {
+  margin: 0 0 0 900px;
+  padding-top: 10px;
+}
+
+/* line 15, ../scss/components/_blocks.scss */
+#block-logintocreatebulletins a, #block-viewmysubmissions a {
+  margin-top: 1%;
+  float: right;
+  color: black;
 }
 
 /* line 3, ../scss/components/_branding.scss */
