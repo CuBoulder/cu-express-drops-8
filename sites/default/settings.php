@@ -769,15 +769,16 @@ if (file_exists(__DIR__ . '/settings.express.php')) {
  *
  * Keep this code block at the end of this file to take full effect.
  */
-<<<<<<< HEAD
-
- if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-   include $app_root . '/' . $site_path . '/settings.local.php';
- }
-=======
 #
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $settings['install_profile'] = 'express';
->>>>>>> Add profile name to settings.php.
+
+
+# Decode Pantheon Settings
+$ps = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+
+# Provide universal absolute path to the SAML library installation.
+# Used in Shibboleth authentication.
+$settings['simplesamlphp_dir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp';
