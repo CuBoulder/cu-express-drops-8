@@ -7,18 +7,17 @@
  * See: https://simplesamlphp.org/docs/stable/simplesamlphp-reference-idp-remote 
  */
 
-/*
+/**
  * Guest IdP. allows users to sign up and register. Great for testing!
  */
-$metadata['https://openidp.feide.no'] = array(
-	'name' => array(
-		'en' => 'Feide OpenIdP - guest users',
-		'no' => 'Feide Gjestebrukere',
-	),
-	'description'          => 'Here you can login with your account on Feide RnD OpenID. If you do not already have an account on this identity provider, you can create a new one by following the create new account link and follow the instructions.',
+$metadata['https://fedauth-test.colorado.edu/idp/shibboleth'] = array(
+  'name' => array(
+    'en' => 'Web Express Service on Pantheon',
+  ),
+  'description'          => 'Used to login users of the Web Express service for sites hosted on Pantheon.',
 
-	'SingleSignOnService'  => 'https://openidp.feide.no/simplesaml/saml2/idp/SSOService.php',
-	'SingleLogoutService'  => 'https://openidp.feide.no/simplesaml/saml2/idp/SingleLogoutService.php',
-	'certFingerprint'      => 'c9ed4dfb07caf13fc21e0fec1572047eb8a7a4cb'
+  'SingleSignOnService'  => 'https://fedauth-test.colorado.edu/idp/profile/SAML2/Redirect/SSO',
+  'SingleLogoutService'  => 'https://fedauth-test.colorado.edu/idp/profile/SAML2/Redirect/SLO',
+  'certFingerprint'      => '968A6B8B735711F3A61852D6C6E26C341F9D3668'
 );
 

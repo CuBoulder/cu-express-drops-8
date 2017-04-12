@@ -13,8 +13,3 @@ $metadata['theproviderid-of-the-idp'] = array(
 	'certFingerprint'      => 'c7279a9f28f11380509e072441e3dc55fb9ab864',
 );
 */
-
-$metadata['colorado.edu'] = array(
-  'SingleSignOnService'  => 'https://fedauth-test.colorado.edu/idp/shibboleth',
-  'certFingerprint'      => '968A6B8B735711F3A61852D6C6E26C341F9D3668',
-);

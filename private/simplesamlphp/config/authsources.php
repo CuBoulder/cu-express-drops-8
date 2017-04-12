@@ -13,7 +13,8 @@ $config = array(
 
     // An authentication source which can authenticate against both SAML 2.0
     // and Shibboleth 1.3 IdPs.
-    'default-sp' => array(
+   /*
+  'default-sp' => array(
         'saml:SP',
 
         // The entity ID of this SP.
@@ -61,13 +62,17 @@ $config = array(
         /*'attributes.required' => array (
             'urn:oid:x.x.x.x',
         ),*/
-    ),
+    //),
 
     'cu_boulder' => array(
       'saml:SP',
-      'entityID' => 'colorado.edu',
+      'entityID' => 'web-express-bulletin',
       'privatekey' => 'saml.pem',
       'certificate' => 'saml.crt',
+      'idp' => 'https://fedauth-test.colorado.edu/idp/shibboleth',
+      'attributes' => array(
+        'uid' => 'urn:oid:0.9.2342.19200300.100.1.1',
+      ),
     ),
 
     /*
