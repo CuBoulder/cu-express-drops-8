@@ -75,9 +75,15 @@ function simplesamlphp_auth_requirements($phase) {
  */
 function simplesamlphp_auth_check_library() {
   if (!class_exists('SimpleSAML_Configuration')) {
-    $dir = Settings::get('simplesamlphp_dir');
+    //$dir = Settings::get('simplesamlphp_dir');
     //print_r($dir);
     //die();
+    $ps = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+
+# Provide universal absolute path to the SAML library installation.
+# Used in Shibboleth authentication.
+    $dir = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp';
+
     include_once $dir . '/lib/_autoload.php';
   }
 }
