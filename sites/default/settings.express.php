@@ -12,6 +12,6 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
 
   # Provide universal absolute path to the SAML library installation.
   # Used in Shibboleth authentication.
-  $conf['simplesamlphp_auth_installdir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp';
+  $settings['simplesamlphp_dir'] = '/srv/bindings/'. $ps['conf']['pantheon_binding'] .'/code/private/simplesamlphp';
 }
 
