@@ -17,8 +17,8 @@
       <file leaf-file-name="settings.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1024">
-              <caret line="783" column="114" lean-forward="false" selection-start-line="783" selection-start-column="114" selection-end-line="783" selection-end-column="114" />
+            <state relative-caret-position="829">
+              <caret line="770" column="3" lean-forward="false" selection-start-line="770" selection-start-column="3" selection-end-line="770" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -282,7 +282,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="896000" />
+    <option name="totallyTimeSpent" value="924000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1441" y="-517" width="1370" height="1308" extended-state="0" />
@@ -512,8 +512,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1024">
-          <caret line="783" column="114" lean-forward="false" selection-start-line="783" selection-start-column="114" selection-end-line="783" selection-end-column="114" />
+        <state relative-caret-position="829">
+          <caret line="770" column="3" lean-forward="false" selection-start-line="770" selection-start-column="3" selection-end-line="770" selection-end-column="3" />
           <folding />
         </state>
       </provider>
