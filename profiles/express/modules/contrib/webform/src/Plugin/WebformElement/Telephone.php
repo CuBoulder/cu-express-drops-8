@@ -2,6 +2,11 @@
 
 namespace Drupal\webform\Plugin\WebformElement;
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Locale\CountryManager;
+use Drupal\webform\WebformInterface;
+use Drupal\webform\WebformSubmissionInterface;
+
 /**
  * Provides a 'tel' element.
  *
@@ -21,13 +26,61 @@ class Telephone extends TextBase {
   public function getDefaultProperties() {
     return parent::getDefaultProperties() + [
       'multiple' => FALSE,
+      'international' => FALSE,
+      'international_initial_country' => '',
     ];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function formatHtmlItem(array &$element, $value, array $options = []) {
+  public function prepare(array &$element, WebformSubmissionInterface $webform_submission) {
+    parent::prepare($element, $webform_submission);
+
+    // Add international library and classes.
+    if (!empty($element['#international'])) {
+      $element['#attached']['library'][] = 'webform/webform.element.telephone';
+      $element['#attributes']['class'][] = 'js-webform-telephone-international';
+      $element['#attributes']['class'][] = 'webform-webform-telephone-international';
+      if (!empty($element['#international_initial_country'])) {
+        $element['#attributes']['data-webform-telephone-international-initial-country'] = $element['#international_initial_country'];
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function form(array $form, FormStateInterface $form_state) {
+    $form = parent::form($form, $form_state);
+    $form['telephone'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Telephone settings'),
+    ];
+    $form['telephone']['international'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enhance support for international phone numbers'),
+      '#description' => $this->t('Enhance the telephone element\'s international support using the jQuery <a href=":href">International Telephone Input</a> plugin.', [':href' => 'http://intl-tel-input.com/']),
+      '#return_value' => TRUE,
+    ];
+    $form['telephone']['international_initial_country'] = [
+      '#title' => $this->t('Initial country'),
+      '#type' => 'select',
+      '#empty_option' => '',
+      '#options' => [
+        'auto' => $this->t('Auto detect'),
+      ] + CountryManager::getStandardList(),
+      '#states' => [
+        'visible' => [':input[name="properties[international]"]' => ['checked' => TRUE]],
+      ],
+    ];
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function formatHtmlItem(array $element, $value, array $options = []) {
     if (empty($value)) {
       return '';
     }
@@ -64,6 +117,19 @@ class Telephone extends TextBase {
   public function getItemFormats() {
     return parent::getItemFormats() + [
       'link' => $this->t('Link'),
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTestValues(array $element, WebformInterface $webform, array $options = []) {
+    if (empty($element['#international'])) {
+      return FALSE;
+    }
+    return [
+      '+1 212-333-4444',
+      '+1 718-555-6666',
     ];
   }
 

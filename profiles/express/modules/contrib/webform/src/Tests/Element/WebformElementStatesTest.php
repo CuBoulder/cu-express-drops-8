@@ -5,6 +5,7 @@ namespace Drupal\webform\Tests\Element;
 use Drupal\Core\Form\OptGroup;
 use Drupal\webform\Tests\WebformTestBase;
 use Drupal\webform\Entity\Webform;
+use Drupal\webform\WebformInterface;
 
 /**
  * Tests for webform element #states.
@@ -18,7 +19,7 @@ class WebformElementStatesTest extends WebformTestBase {
    *
    * @var array
    */
-  protected static $modules = ['filter', 'file', 'language', 'node', 'webform'];
+  protected static $modules = ['filter', 'file', 'language', 'taxonomy', 'node', 'webform'];
 
   /**
    * Webforms to load.
@@ -28,13 +29,23 @@ class WebformElementStatesTest extends WebformTestBase {
   protected static $testWebforms = ['example_elements', 'example_elements_composite', 'test_element_states'];
 
   /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp();
+
+    // Create 'tags' vocabulary.
+    $this->createTags();
+  }
+
+  /**
    * Tests element #states selectors for basic and composite elements.
    */
   public function testSelectors() {
     foreach (['example_elements', 'example_elements_composite'] as $weform_id) {
       /** @var \Drupal\webform\WebformInterface $webform */
       $webform = Webform::load($weform_id);
-      $webform->setStatus(TRUE)->save();
+      $webform->setStatus(WebformInterface::STATUS_OPEN)->save();
 
       $this->drupalGet('webform/' . $weform_id);
 
@@ -69,10 +80,10 @@ class WebformElementStatesTest extends WebformTestBase {
     selector_01:
       checked: true
   required:
-    - 'selector_01''':
-        checked: true
-    - selector_02:
-        checked: true
+    'selector_01''':
+      checked: true
+    selector_02:
+      checked: true
   disabled:
     - selector_01:
         checked: true

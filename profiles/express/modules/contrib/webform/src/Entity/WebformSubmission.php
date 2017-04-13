@@ -35,6 +35,7 @@ use Drupal\webform\WebformSubmissionInterface;
  *     "form" = {
  *       "default" = "Drupal\webform\WebformSubmissionForm",
  *       "notes" = "Drupal\webform\WebformSubmissionNotesForm",
+ *       "duplicate" = "Drupal\webform\WebformSubmissionDuplicateForm",
  *       "delete" = "Drupal\webform\Form\WebformSubmissionDeleteForm",
  *     },
  *   },
@@ -52,9 +53,11 @@ use Drupal\webform\WebformSubmissionInterface;
  *     "table" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/table",
  *     "text" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/text",
  *     "yaml" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/yaml",
+ *     "yaml" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/yaml",
  *     "edit-form" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/edit",
  *     "notes-form" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/notes",
  *     "resend-form" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/resend",
+ *     "duplicate-form" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/duplicate",
  *     "delete-form" = "/admin/structure/webform/manage/{webform}/submission/{webform_submission}/delete",
  *     "collection" = "/admin/structure/webform/results/manage/list"
  *   },
@@ -88,6 +91,13 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    * @var array
    */
   protected $originalData = [];
+
+  /**
+   * Flag to indicated is submission is being converted from anonymous to authenticated.
+   *
+   * @var bool
+   */
+  protected $converting = FALSE;
 
   /**
    * {@inheritdoc}
@@ -149,8 +159,9 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Submitted by'))
-      ->setDescription(t('The submitter.'))
-      ->setSetting('target_type', 'user');
+      ->setDescription(t('The username of the user that submitted the webform.'))
+      ->setSetting('target_type', 'user')
+      ->setDefaultValueCallback('Drupal\webform\Entity\WebformSubmission::getCurrentUserId');
 
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language'))
@@ -193,7 +204,7 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    * {@inheritdoc}
    */
   public function serial() {
-    return $this->serial->value;
+    return $this->get('serial')->value;
   }
 
   /**
@@ -486,6 +497,13 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
   /**
    * {@inheritdoc}
    */
+  public function isConverting() {
+    return $this->converting;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function isCompleted() {
     return $this->get('completed')->value ? TRUE : FALSE;
   }
@@ -508,12 +526,15 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    * Track the state of a submission.
    *
    * @return int
-   *    Either STATE_NEW, STATE_DRAFT, STATE_COMPLETED, or STATE_UPDATED,
+   *   Either STATE_UNSAVED, STATE_CONVERTED, STATE_DRAFT, STATE_COMPLETED, or STATE_UPDATED,
    *   depending on the last save operation performed.
    */
   public function getState() {
     if (!$this->id()) {
       return self::STATE_UNSAVED;
+    }
+    elseif ($this->isConverting()) {
+      return self::STATE_CONVERTED;
     }
     elseif ($this->isDraft()) {
       return self::STATE_DRAFT;
@@ -622,7 +643,15 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    * {@inheritdoc}
    */
   public function preSave(EntityStorageInterface $storage) {
+    // Set created.
+    if (!$this->created->value) {
+      $this->created->value = REQUEST_TIME;
+    }
+
+    // Set changed.
     $this->changed->value = REQUEST_TIME;
+
+    // Set completed.
     if ($this->isDraft()) {
       $this->completed->value = NULL;
     }
@@ -636,6 +665,13 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
   /**
    * {@inheritdoc}
    */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function save() {
     // Clear the remote_addr for confidential submissions.
     if ($this->getWebform()->isConfidential()) {
@@ -643,6 +679,16 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
     }
 
     return parent::save();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function convert(UserInterface $account) {
+    $this->converting = TRUE;
+    $this->setOwner($account);
+    $this->save();
+    $this->converting = FALSE;
   }
 
   /**
@@ -684,6 +730,19 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
 
       return $values;
     }
+  }
+
+
+  /**
+   * Default value callback for 'uid' base field definition.
+   *
+   * @see ::baseFieldDefinitions()
+   *
+   * @return array
+   *   An array of default values.
+   */
+  public static function getCurrentUserId() {
+    return [\Drupal::currentUser()->id()];
   }
 
 }

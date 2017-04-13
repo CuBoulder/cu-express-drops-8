@@ -15,6 +15,63 @@ use Drupal\webform\WebformSubmissionInterface;
 class WebformNodeAccess {
 
   /**
+   * Check whether the user can access a node's webform results.
+   *
+   * @param string $operation
+   *   Operation being performed.
+   * @param string $entity_access
+   *   Entity access rule that needs to be checked.
+   * @param \Drupal\node\NodeInterface $node
+   *   A node.
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   Run access checks for this account.
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   The access result.
+   */
+  public static function checkWebformResultsAccess($operation, $entity_access, NodeInterface $node, AccountInterface $account) {
+    $access_result = self::checkAccess($operation, $entity_access, $node, NULL, $account);
+    if ($access_result->isAllowed()) {
+      $webform_field_name = WebformEntityReferenceItem::getEntityWebformFieldName($node);
+      return WebformAccess::checkResultsAccess($node->$webform_field_name->entity, $node);
+    }
+    else {
+      return $access_result;
+    }
+  }
+
+  /**
+   * Check whether the user can access a node's webform log.
+   *
+   * @param string $operation
+   *   Operation being performed.
+   * @param string $entity_access
+   *   Entity access rule that needs to be checked.
+   * @param \Drupal\node\NodeInterface $node
+   *   A node.
+   * @param \Drupal\Core\Session\AccountInterface $account
+   *   Run access checks for this account.
+   *
+   * @return \Drupal\Core\Access\AccessResultInterface
+   *   The access result.
+   */
+  public static function checkWebformLogAccess($operation, $entity_access, NodeInterface $node, AccountInterface $account) {
+    $access_result = self::checkWebformResultsAccess($operation, $entity_access, $node, $account);
+    if (!$access_result->isAllowed()) {
+      return $access_result;
+    }
+
+    $webform_field_name = WebformEntityReferenceItem::getEntityWebformFieldName($node);
+    /** @var \Drupal\webform\WebformInterface $webform */
+    $webform = $node->$webform_field_name->entity;
+    if (!$webform->hasSubmissionLog()) {
+      $access_result = AccessResult::forbidden();
+    }
+
+    return $access_result->addCacheableDependency($webform)->addCacheTags(['config:webform.settings']);
+  }
+
+  /**
    * Check whether the user can access a node's webform.
    *
    * @param string $operation
