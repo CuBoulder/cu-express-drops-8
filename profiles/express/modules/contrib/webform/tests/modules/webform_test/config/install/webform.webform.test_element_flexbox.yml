@@ -1,15 +1,43 @@
 langcode: en
-status: true
+status: open
 dependencies:
   enforced:
     module:
       - webform_test
+open: null
+close: null
 uid: null
 template: false
 id: test_element_flexbox
 title: 'Test: Element: Flexbox'
 description: 'Test flexbox layout.'
 elements: |
+  flexbox_processed_text:
+    '#type': webform_flexbox
+    flex_processed_text_left:
+      '#type': processed_text
+      '#title': 'Advanced HTML/Text 01'
+      processed_text_content:
+        '#markup': 'This is a Advanced HTML/Text container.'
+    flex_processed_text_right:
+      '#type': processed_text
+      '#title': 'Advanced HTML/Text 02'
+      processed_text_content:
+        '#markup': 'This is a Advanced HTML/Text container.'
+  flexbox_webform_markup:
+    '#type': webform_flexbox
+    flex_webform_markup_left:
+      '#type': webform_markup
+      '#title': 'Basic HTML 01'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
+      webform_markup_content:
+        '#markup': 'This is a Basic HTML container.'
+    flex_webform_markup_right:
+      '#type': webform_markup
+      '#title': 'Basic HTML 02'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
+      webform_markup_content:
+        '#markup': 'This is a Basic HTML container.'
   flexbox_captcha:
     '#type': webform_flexbox
     flex_captcha_left:
@@ -56,20 +84,6 @@ elements: |
       '#title': 'Fieldset 02'
       fieldset_content:
         '#markup': 'This is a Fieldset container.'
-  flexbox_webform_markup:
-    '#type': webform_flexbox
-    flex_webform_markup_left:
-      '#type': webform_markup
-      '#title': 'HTML markup 01'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
-      webform_markup_content:
-        '#markup': 'This is a HTML markup container.'
-    flex_webform_markup_right:
-      '#type': webform_markup
-      '#title': 'HTML markup 02'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
-      webform_markup_content:
-        '#markup': 'This is a HTML markup container.'
   flexbox_item:
     '#type': webform_flexbox
     flex_item_left:
@@ -120,18 +134,6 @@ elements: |
       '#message_message': 'This is a <strong>warning</strong> message.'
       webform_message_content:
         '#markup': 'This is a Message container.'
-  flexbox_processed_text:
-    '#type': webform_flexbox
-    flex_processed_text_left:
-      '#type': processed_text
-      '#title': 'Processed text 01'
-      processed_text_content:
-        '#markup': 'This is a Processed text container.'
-    flex_processed_text_right:
-      '#type': processed_text
-      '#title': 'Processed text 02'
-      processed_text_content:
-        '#markup': 'This is a Processed text container.'
   flexbox_table:
     '#type': webform_flexbox
     flex_table_left:
@@ -371,6 +373,9 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options':
+        1: Administrator
+        0: Anonymous
     flex_webform_entity_checkboxes_right:
       '#type': webform_entity_checkboxes
       '#title': 'Entity checkboxes 02'
@@ -378,6 +383,9 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options':
+        1: Administrator
+        0: Anonymous
   flexbox_webform_entity_radios:
     '#type': webform_flexbox
     flex_webform_entity_radios_left:
@@ -387,6 +395,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options': null
     flex_webform_entity_radios_right:
       '#type': webform_entity_radios
       '#title': 'Entity radios 02'
@@ -394,6 +403,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options': null
   flexbox_webform_entity_select:
     '#type': webform_flexbox
     flex_webform_entity_select_left:
@@ -436,6 +446,36 @@ elements: |
     flex_webform_image_file_right:
       '#type': webform_image_file
       '#title': 'Image file 02'
+  flexbox_webform_image_select:
+    '#type': webform_flexbox
+    flex_webform_image_select_left:
+      '#type': webform_image_select
+      '#title': 'Image select 01'
+      '#show_label': true
+      '#images':
+        kitten_1:
+          text: 'Cute Kitten 1'
+          src: 'http://placekitten.com/220/200'
+        kitten_2:
+          text: 'Cute Kitten 2'
+          src: 'http://placekitten.com/180/200'
+        kitten_3:
+          text: 'Cute Kitten 3'
+          src: 'http://placekitten.com/130/200'
+    flex_webform_image_select_right:
+      '#type': webform_image_select
+      '#title': 'Image select 02'
+      '#show_label': true
+      '#images':
+        kitten_1:
+          text: 'Cute Kitten 1'
+          src: 'http://placekitten.com/220/200'
+        kitten_2:
+          text: 'Cute Kitten 2'
+          src: 'http://placekitten.com/180/200'
+        kitten_3:
+          text: 'Cute Kitten 3'
+          src: 'http://placekitten.com/130/200'
   flexbox_language_select:
     '#type': webform_flexbox
     flex_language_select_left:
@@ -487,9 +527,15 @@ elements: |
     flex_webform_location_left:
       '#type': webform_location
       '#title': 'Location 01'
+      '#map': true
+      '#geolocation': true
+      '#format': map
     flex_webform_location_right:
       '#type': webform_location
       '#title': 'Location 02'
+      '#map': true
+      '#geolocation': true
+      '#format': map
   flexbox_machine_name:
     '#type': webform_flexbox
     flex_machine_name_left:
@@ -498,6 +544,30 @@ elements: |
     flex_machine_name_right:
       '#type': machine_name
       '#title': 'Machine name 02'
+  flexbox_webform_mapping:
+    '#type': webform_flexbox
+    flex_webform_mapping_left:
+      '#type': webform_mapping
+      '#title': 'Mapping 01'
+      '#source':
+        one: One
+        two: Two
+        three: Three
+      '#destination':
+        four: Four
+        five: Five
+        six: Six
+    flex_webform_mapping_right:
+      '#type': webform_mapping
+      '#title': 'Mapping 02'
+      '#source':
+        one: One
+        two: Two
+        three: Three
+      '#destination':
+        four: Four
+        five: Five
+        six: Six
   flexbox_webform_name:
     '#type': webform_flexbox
     flex_webform_name_left:
@@ -703,9 +773,39 @@ elements: |
     flex_tel_left:
       '#type': tel
       '#title': 'Telephone 01'
+      '#international': true
     flex_tel_right:
       '#type': tel
       '#title': 'Telephone 02'
+      '#international': true
+  flexbox_webform_telephone:
+    '#type': webform_flexbox
+    flex_webform_telephone_left:
+      '#type': webform_telephone
+      '#title': 'Telephone advanced 01'
+    flex_webform_telephone_right:
+      '#type': webform_telephone
+      '#title': 'Telephone advanced 02'
+  flexbox_webform_term_checkboxes:
+    '#type': webform_flexbox
+    flex_webform_term_checkboxes_left:
+      '#type': webform_term_checkboxes
+      '#title': 'Term checkboxes 01'
+      '#vocabulary': tags
+    flex_webform_term_checkboxes_right:
+      '#type': webform_term_checkboxes
+      '#title': 'Term checkboxes 02'
+      '#vocabulary': tags
+  flexbox_webform_term_select:
+    '#type': webform_flexbox
+    flex_webform_term_select_left:
+      '#type': webform_term_select
+      '#title': 'Term select 01'
+      '#vocabulary': tags
+    flex_webform_term_select_right:
+      '#type': webform_term_select
+      '#title': 'Term select 02'
+      '#vocabulary': tags
   flexbox_textarea:
     '#type': webform_flexbox
     flex_textarea_left:
@@ -825,10 +925,12 @@ settings:
   form_submit_once: false
   form_submit_attributes: {  }
   form_exception_message: ''
-  form_closed_message: ''
+  form_open_message: ''
+  form_close_message: ''
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
+  form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
   form_disable_autocomplete: false
@@ -837,6 +939,7 @@ settings:
   form_disable_back: false
   form_autofocus: false
   form_details_toggle: false
+  submission_log: false
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -853,13 +956,14 @@ settings:
   preview_prev_button_label: ''
   preview_prev_button_attributes: {  }
   preview_message: ''
-  draft: false
+  draft: none
   draft_auto_save: false
   draft_button_label: ''
   draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
+  confirmation_title: ''
   confirmation_message: ''
   confirmation_url: ''
   confirmation_attributes: {  }

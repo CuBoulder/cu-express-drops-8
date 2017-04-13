@@ -1,9 +1,11 @@
 langcode: en
-status: true
+status: open
 dependencies:
   enforced:
     module:
       - webform_test
+open: null
+close: null
 uid: null
 template: false
 id: test_element_format
@@ -308,17 +310,20 @@ elements: |
       tel_value:
         '#type': tel
         '#title': 'Telephone (Value)'
-        '#default_value': 123-456-7890
+        '#international': true
+        '#default_value': '+1 212-333-4444'
         '#format': value
       tel_raw:
         '#type': tel
         '#title': 'Telephone (Raw value)'
-        '#default_value': 123-456-7890
+        '#international': true
+        '#default_value': '+1 212-333-4444'
         '#format': raw
       tel_link:
         '#type': tel
         '#title': 'Telephone (Link)'
-        '#default_value': 123-456-7890
+        '#international': true
+        '#default_value': '+1 212-333-4444'
         '#format': link
     webform_toggle:
       '#type': details
@@ -405,6 +410,57 @@ elements: |
           five: Five
         '#default_value': one
         '#format': raw
+    webform_image_select:
+      '#type': details
+      '#title': 'Image select'
+      webform_image_select_value:
+        '#type': webform_image_select
+        '#title': 'Image select (Value)'
+        '#show_label': true
+        '#images':
+          kitten_1:
+            text: 'Cute Kitten 1'
+            src: 'http://placekitten.com/220/200'
+          kitten_2:
+            text: 'Cute Kitten 2'
+            src: 'http://placekitten.com/180/200'
+          kitten_3:
+            text: 'Cute Kitten 3'
+            src: 'http://placekitten.com/130/200'
+        '#default_value': Loremipsum
+        '#format': value
+      webform_image_select_raw:
+        '#type': webform_image_select
+        '#title': 'Image select (Raw value)'
+        '#show_label': true
+        '#images':
+          kitten_1:
+            text: 'Cute Kitten 1'
+            src: 'http://placekitten.com/220/200'
+          kitten_2:
+            text: 'Cute Kitten 2'
+            src: 'http://placekitten.com/180/200'
+          kitten_3:
+            text: 'Cute Kitten 3'
+            src: 'http://placekitten.com/130/200'
+        '#default_value': Loremipsum
+        '#format': raw
+      webform_image_select_image:
+        '#type': webform_image_select
+        '#title': 'Image select (Image)'
+        '#show_label': true
+        '#images':
+          kitten_1:
+            text: 'Cute Kitten 1'
+            src: 'http://placekitten.com/220/200'
+          kitten_2:
+            text: 'Cute Kitten 2'
+            src: 'http://placekitten.com/180/200'
+          kitten_3:
+            text: 'Cute Kitten 3'
+            src: 'http://placekitten.com/130/200'
+        '#default_value': Loremipsum
+        '#format': image
     radios:
       '#type': details
       '#title': Radios
@@ -815,6 +871,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': value
       webform_entity_radios_raw:
@@ -824,6 +881,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': raw
       webform_entity_radios_link:
@@ -833,6 +891,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': link
       webform_entity_radios_id:
@@ -842,6 +901,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': id
       webform_entity_radios_label:
@@ -851,6 +911,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': label
       webform_entity_radios_text:
@@ -860,6 +921,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': text
       webform_entity_radios_teaser:
@@ -869,6 +931,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': teaser
       webform_entity_radios_default:
@@ -878,6 +941,7 @@ elements: |
         '#selection_handler': 'default:user'
         '#selection_settings':
           include_anonymous: true
+        '#options': null
         '#default_value': 1
         '#format': default
     webform_entity_select:
@@ -955,6 +1019,63 @@ elements: |
           include_anonymous: true
         '#default_value': 1
         '#format': default
+    webform_term_select:
+      '#type': details
+      '#title': 'Term select'
+      webform_term_select_value:
+        '#type': webform_term_select
+        '#title': 'Term select (Value)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': value
+      webform_term_select_raw:
+        '#type': webform_term_select
+        '#title': 'Term select (Raw value)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': raw
+      webform_term_select_link:
+        '#type': webform_term_select
+        '#title': 'Term select (Link)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': link
+      webform_term_select_id:
+        '#type': webform_term_select
+        '#title': 'Term select (Entity ID)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': id
+      webform_term_select_label:
+        '#type': webform_term_select
+        '#title': 'Term select (Label)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': label
+      webform_term_select_text:
+        '#type': webform_term_select
+        '#title': 'Term select (Label (ID))'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': text
+      webform_term_select_teaser:
+        '#type': webform_term_select
+        '#title': 'Term select (Teaser)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': teaser
+      webform_term_select_default:
+        '#type': webform_term_select
+        '#title': 'Term select (Default)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': default
+      webform_term_select_breadcrumb:
+        '#type': webform_term_select
+        '#title': 'Term select (Breadcrumb)'
+        '#vocabulary': tags
+        '#default_value': Loremipsum
+        '#format': breadcrumb
   other_elements:
     '#type': details
     '#title': 'Other elements'
@@ -982,10 +1103,12 @@ settings:
   form_submit_once: false
   form_submit_attributes: {  }
   form_exception_message: ''
-  form_closed_message: ''
+  form_open_message: ''
+  form_close_message: ''
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
+  form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
   form_disable_autocomplete: false
@@ -994,6 +1117,7 @@ settings:
   form_disable_back: false
   form_autofocus: false
   form_details_toggle: false
+  submission_log: false
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -1010,13 +1134,14 @@ settings:
   preview_prev_button_label: ''
   preview_prev_button_attributes: {  }
   preview_message: ''
-  draft: false
+  draft: none
   draft_auto_save: false
   draft_button_label: ''
   draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
+  confirmation_title: ''
   confirmation_message: ''
   confirmation_url: ''
   confirmation_attributes: {  }
@@ -1069,10 +1194,16 @@ handlers:
     status: true
     weight: 1
     settings:
+      states:
+        - completed
       to_mail: default
+      to_options: {  }
       cc_mail: ''
+      cc_options: {  }
       bcc_mail: ''
+      bcc_options: {  }
       from_mail: default
+      from_options: {  }
       from_name: default
       subject: default
       body: default
@@ -1080,6 +1211,8 @@ handlers:
       html: false
       attachments: false
       debug: true
+      reply_to: ''
+      return_path: ''
   email_html:
     id: email
     label: 'Email (HTML)'
@@ -1087,10 +1220,16 @@ handlers:
     status: true
     weight: 2
     settings:
+      states:
+        - completed
       to_mail: default
+      to_options: {  }
       cc_mail: ''
+      cc_options: {  }
       bcc_mail: ''
+      bcc_options: {  }
       from_mail: default
+      from_options: {  }
       from_name: default
       subject: default
       body: default
@@ -1098,3 +1237,5 @@ handlers:
       html: true
       attachments: false
       debug: true
+      reply_to: ''
+      return_path: ''

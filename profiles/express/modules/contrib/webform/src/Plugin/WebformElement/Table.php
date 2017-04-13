@@ -71,13 +71,6 @@ class Table extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  protected function build($format, array &$element, $value, array $options = []) {
-    return parent::build($format, $element, $value, $options);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getItemDefaultFormat() {
     return 'table';
   }
@@ -101,7 +94,7 @@ class Table extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function formatHtmlItem(array &$element, $value, array $options = []) {
+  public function formatHtmlItem(array $element, $value, array $options = []) {
     // Undo webform submission elements and convert rows back into a simple
     // render array.
     $rows = [];
@@ -131,7 +124,7 @@ class Table extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function formatTextItem(array &$element, $value, array $options = []) {
+  public function formatTextItem(array $element, $value, array $options = []) {
     // Render the HTML table.
     $build = $this->formatHtml($element, $value, $options);
     $html = \Drupal::service('renderer')->renderPlain($build);

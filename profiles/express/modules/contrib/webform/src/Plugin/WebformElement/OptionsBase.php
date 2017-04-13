@@ -5,6 +5,7 @@ namespace Drupal\webform\Plugin\WebformElement;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Form\OptGroup;
+use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\Utility\WebformOptionsHelper;
 use Drupal\webform\WebformElementBase;
 use Drupal\webform\WebformSubmissionInterface;
@@ -29,7 +30,7 @@ abstract class OptionsBase extends WebformElementBase {
 
     // Issue #2836374: Wrapper attributes are not supported by composite
     // elements, this includes radios, checkboxes, and buttons.
-    if (preg_match('/(radios|checkboxes|buttons)/', $this->getPluginId())) {
+    if (preg_match('/(radios|checkboxes|buttons|tableselect|tableselect_sort)$/', $this->getPluginId())) {
       unset($default_properties['wrapper_attributes']);
     }
 
@@ -98,7 +99,7 @@ abstract class OptionsBase extends WebformElementBase {
 
     // Randomize options.
     if (isset($element['#options']) && !empty($element['#options_randomize'])) {
-      shuffle($element['#options']);
+      $element['#options'] = WebformArrayHelper::shuffle($element['#options']);
     }
 
     $is_wrapper_fieldset = in_array($element['#type'], ['checkboxes', 'radios']);
@@ -123,6 +124,13 @@ abstract class OptionsBase extends WebformElementBase {
             break;
         }
       }
+    }
+
+    // If the element is #required and the #default_value is an empty string
+    // we need to unset the #default_value to prevent the below error.
+    // 'An illegal choice has been detected.'
+    if (!empty($element['#required']) && isset($element['#default_value']) && $element['#default_value'] === '') {
+      unset($element['#default_value']);
     }
   }
 
@@ -151,7 +159,7 @@ abstract class OptionsBase extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  protected function formatTextItem(array &$element, $value, array $options = []) {
+  protected function formatTextItem(array $element, $value, array $options = []) {
     $format = $this->getItemFormat($element);
     if ($format == 'value' && isset($element['#options'])) {
       $flattened_options = OptGroup::flattenOptions($element['#options']);
@@ -326,7 +334,7 @@ abstract class OptionsBase extends WebformElementBase {
     if ($inputs = $this->getElementSelectorInputsOptions($element)) {
       $selectors = [];
       foreach ($inputs as $input_name => $input_title) {
-        $multiple = ($this->hasMultipleValues($element) && $input_name == 'select') ? '[]' : '';
+        $multiple = ($this->hasMultipleValues($element) && $input_name === 'select') ? '[]' : '';
         $selectors[":input[name=\"{$name}[{$input_name}]$multiple\"]"] = $input_title;
       }
       return [$title => $selectors];
