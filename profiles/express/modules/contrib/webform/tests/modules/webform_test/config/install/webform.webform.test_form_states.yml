@@ -1,9 +1,11 @@
 langcode: en
-status: false
+status: open
 dependencies:
   enforced:
     module:
       - webform_test
+open: null
+close: null
 uid: null
 template: false
 id: test_form_states
@@ -16,6 +18,31 @@ elements: |
     visible_trigger:
       '#type': checkbox
       '#title': 'Displays and require elements'
+    visible_processed_text:
+      '#type': processed_text
+      '#title': 'Advanced HTML/Text'
+      visible_processed_text_content:
+        '#markup': 'This is a Advanced HTML/Text container.'
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_webform_markup:
+      '#type': webform_markup
+      '#title': 'Basic HTML'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
+      visible_webform_markup_content:
+        '#markup': 'This is a Basic HTML container.'
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
     visible_captcha:
       '#type': captcha
       '#title': CAPTCHA
@@ -75,19 +102,6 @@ elements: |
         required:
           ':input[name="visible_trigger"]':
             checked: true
-    visible_webform_markup:
-      '#type': webform_markup
-      '#title': 'HTML markup'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
-      visible_webform_markup_content:
-        '#markup': 'This is a HTML markup container.'
-      '#states':
-        visible:
-          ':input[name="visible_trigger"]':
-            checked: true
-        required:
-          ':input[name="visible_trigger"]':
-            checked: true
     visible_item:
       '#type': item
       '#title': Item
@@ -124,18 +138,6 @@ elements: |
       '#message_message': 'This is a <strong>warning</strong> message.'
       visible_webform_message_content:
         '#markup': 'This is a Message container.'
-      '#states':
-        visible:
-          ':input[name="visible_trigger"]':
-            checked: true
-        required:
-          ':input[name="visible_trigger"]':
-            checked: true
-    visible_processed_text:
-      '#type': processed_text
-      '#title': 'Processed text'
-      visible_processed_text_content:
-        '#markup': 'This is a Processed text container.'
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -446,6 +448,9 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options':
+        1: Administrator
+        0: Anonymous
       '#default_value':
         - 1
       '#states':
@@ -462,6 +467,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options': null
       '#default_value': 1
       '#states':
         visible:
@@ -510,6 +516,28 @@ elements: |
     visible_webform_image_file:
       '#type': webform_image_file
       '#title': 'Image file'
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_webform_image_select:
+      '#type': webform_image_select
+      '#title': 'Image select'
+      '#show_label': true
+      '#images':
+        kitten_1:
+          text: 'Cute Kitten 1'
+          src: 'http://placekitten.com/220/200'
+        kitten_2:
+          text: 'Cute Kitten 2'
+          src: 'http://placekitten.com/180/200'
+        kitten_3:
+          text: 'Cute Kitten 3'
+          src: 'http://placekitten.com/130/200'
+      '#default_value': Loremipsum
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -569,6 +597,9 @@ elements: |
     visible_webform_location:
       '#type': webform_location
       '#title': Location
+      '#map': true
+      '#geolocation': true
+      '#format': map
       '#default_value':
         value: 'The White House, 1600 Pennsylvania Ave NW, Washington, DC 20500, USA'
       '#states':
@@ -582,6 +613,28 @@ elements: |
       '#type': machine_name
       '#title': 'Machine name'
       '#default_value': loremipsum
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_webform_mapping:
+      '#type': webform_mapping
+      '#title': Mapping
+      '#source':
+        one: One
+        two: Two
+        three: Three
+      '#destination':
+        four: Four
+        five: Five
+        six: Six
+      '#default_value':
+        one: four
+        two: four
+        three: four
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -809,7 +862,49 @@ elements: |
     visible_tel:
       '#type': tel
       '#title': Telephone
-      '#default_value': 123-456-7890
+      '#international': true
+      '#default_value': '+1 212-333-4444'
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_webform_telephone:
+      '#type': webform_telephone
+      '#title': 'Telephone advanced'
+      '#default_value':
+        type: Home
+        phone: '+1 212-333-4444'
+        ext: 0
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_webform_term_checkboxes:
+      '#type': webform_term_checkboxes
+      '#title': 'Term checkboxes'
+      '#vocabulary': tags
+      '#default_value':
+        - Loremipsum
+        - Oratione
+        - Dixisset
+      '#states':
+        visible:
+          ':input[name="visible_trigger"]':
+            checked: true
+        required:
+          ':input[name="visible_trigger"]':
+            checked: true
+    visible_webform_term_select:
+      '#type': webform_term_select
+      '#title': 'Term select'
+      '#vocabulary': tags
+      '#default_value': Loremipsum
       '#states':
         visible:
           ':input[name="visible_trigger"]':
@@ -930,6 +1025,25 @@ elements: |
     invisible_trigger:
       '#type': checkbox
       '#title': 'Hide and empty elements'
+    invisible_processed_text:
+      '#type': processed_text
+      '#title': 'Advanced HTML/Text'
+      invisible_processed_text_content:
+        '#markup': 'This is a Advanced HTML/Text container.'
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_webform_markup:
+      '#type': webform_markup
+      '#title': 'Basic HTML'
+      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
+      invisible_webform_markup_content:
+        '#markup': 'This is a Basic HTML container.'
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
     invisible_captcha:
       '#type': captcha
       '#title': CAPTCHA
@@ -974,16 +1088,6 @@ elements: |
         invisible:
           ':input[name="invisible_trigger"]':
             checked: true
-    invisible_webform_markup:
-      '#type': webform_markup
-      '#title': 'HTML markup'
-      '#description': '<b>Known Issues:</b><br/><a href="https://www.drupal.org/node/2700667">Issue #2700667: Notice: Undefined index: #type in drupal_process_states()</a>'
-      invisible_webform_markup_content:
-        '#markup': 'This is a HTML markup container.'
-      '#states':
-        invisible:
-          ':input[name="invisible_trigger"]':
-            checked: true
     invisible_item:
       '#type': item
       '#title': Item
@@ -1014,15 +1118,6 @@ elements: |
       '#message_message': 'This is a <strong>warning</strong> message.'
       invisible_webform_message_content:
         '#markup': 'This is a Message container.'
-      '#states':
-        invisible:
-          ':input[name="invisible_trigger"]':
-            checked: true
-    invisible_processed_text:
-      '#type': processed_text
-      '#title': 'Processed text'
-      invisible_processed_text_content:
-        '#markup': 'This is a Processed text container.'
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1264,6 +1359,9 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options':
+        1: Administrator
+        0: Anonymous
       '#default_value':
         - 1
       '#states':
@@ -1277,6 +1375,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options': null
       '#default_value': 1
       '#states':
         invisible:
@@ -1313,6 +1412,25 @@ elements: |
     invisible_webform_image_file:
       '#type': webform_image_file
       '#title': 'Image file'
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_webform_image_select:
+      '#type': webform_image_select
+      '#title': 'Image select'
+      '#show_label': true
+      '#images':
+        kitten_1:
+          text: 'Cute Kitten 1'
+          src: 'http://placekitten.com/220/200'
+        kitten_2:
+          text: 'Cute Kitten 2'
+          src: 'http://placekitten.com/180/200'
+        kitten_3:
+          text: 'Cute Kitten 3'
+          src: 'http://placekitten.com/130/200'
+      '#default_value': Loremipsum
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1360,6 +1478,9 @@ elements: |
     invisible_webform_location:
       '#type': webform_location
       '#title': Location
+      '#map': true
+      '#geolocation': true
+      '#format': map
       '#default_value':
         value: 'The White House, 1600 Pennsylvania Ave NW, Washington, DC 20500, USA'
       '#states':
@@ -1370,6 +1491,25 @@ elements: |
       '#type': machine_name
       '#title': 'Machine name'
       '#default_value': loremipsum
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_webform_mapping:
+      '#type': webform_mapping
+      '#title': Mapping
+      '#source':
+        one: One
+        two: Two
+        three: Three
+      '#destination':
+        four: Four
+        five: Five
+        six: Six
+      '#default_value':
+        one: four
+        two: four
+        three: four
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1549,7 +1689,40 @@ elements: |
     invisible_tel:
       '#type': tel
       '#title': Telephone
-      '#default_value': 123-456-7890
+      '#international': true
+      '#default_value': '+1 212-333-4444'
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_webform_telephone:
+      '#type': webform_telephone
+      '#title': 'Telephone advanced'
+      '#default_value':
+        type: Home
+        phone: '+1 212-333-4444'
+        ext: 0
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_webform_term_checkboxes:
+      '#type': webform_term_checkboxes
+      '#title': 'Term checkboxes'
+      '#vocabulary': tags
+      '#default_value':
+        - Loremipsum
+        - Oratione
+        - Dixisset
+      '#states':
+        invisible:
+          ':input[name="invisible_trigger"]':
+            checked: true
+    invisible_webform_term_select:
+      '#type': webform_term_select
+      '#title': 'Term select'
+      '#vocabulary': tags
+      '#default_value': Loremipsum
       '#states':
         invisible:
           ':input[name="invisible_trigger"]':
@@ -1868,6 +2041,9 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options':
+        1: Administrator
+        0: Anonymous
       '#default_value':
         - 1
       '#states':
@@ -1881,6 +2057,7 @@ elements: |
       '#selection_handler': 'default:user'
       '#selection_settings':
         include_anonymous: true
+      '#options': null
       '#default_value': 1
       '#states':
         disabled:
@@ -1917,6 +2094,25 @@ elements: |
     disabled_webform_image_file:
       '#type': webform_image_file
       '#title': 'Image file'
+      '#states':
+        disabled:
+          ':input[name="disabled_trigger"]':
+            checked: true
+    disabled_webform_image_select:
+      '#type': webform_image_select
+      '#title': 'Image select'
+      '#show_label': true
+      '#images':
+        kitten_1:
+          text: 'Cute Kitten 1'
+          src: 'http://placekitten.com/220/200'
+        kitten_2:
+          text: 'Cute Kitten 2'
+          src: 'http://placekitten.com/180/200'
+        kitten_3:
+          text: 'Cute Kitten 3'
+          src: 'http://placekitten.com/130/200'
+      '#default_value': Loremipsum
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -1964,6 +2160,9 @@ elements: |
     disabled_webform_location:
       '#type': webform_location
       '#title': Location
+      '#map': true
+      '#geolocation': true
+      '#format': map
       '#default_value':
         value: 'The White House, 1600 Pennsylvania Ave NW, Washington, DC 20500, USA'
       '#states':
@@ -1974,6 +2173,25 @@ elements: |
       '#type': machine_name
       '#title': 'Machine name'
       '#default_value': loremipsum
+      '#states':
+        disabled:
+          ':input[name="disabled_trigger"]':
+            checked: true
+    disabled_webform_mapping:
+      '#type': webform_mapping
+      '#title': Mapping
+      '#source':
+        one: One
+        two: Two
+        three: Three
+      '#destination':
+        four: Four
+        five: Five
+        six: Six
+      '#default_value':
+        one: four
+        two: four
+        three: four
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2153,7 +2371,40 @@ elements: |
     disabled_tel:
       '#type': tel
       '#title': Telephone
-      '#default_value': 123-456-7890
+      '#international': true
+      '#default_value': '+1 212-333-4444'
+      '#states':
+        disabled:
+          ':input[name="disabled_trigger"]':
+            checked: true
+    disabled_webform_telephone:
+      '#type': webform_telephone
+      '#title': 'Telephone advanced'
+      '#default_value':
+        type: Home
+        phone: '+1 212-333-4444'
+        ext: 0
+      '#states':
+        disabled:
+          ':input[name="disabled_trigger"]':
+            checked: true
+    disabled_webform_term_checkboxes:
+      '#type': webform_term_checkboxes
+      '#title': 'Term checkboxes'
+      '#vocabulary': tags
+      '#default_value':
+        - Loremipsum
+        - Oratione
+        - Dixisset
+      '#states':
+        disabled:
+          ':input[name="disabled_trigger"]':
+            checked: true
+    disabled_webform_term_select:
+      '#type': webform_term_select
+      '#title': 'Term select'
+      '#vocabulary': tags
+      '#default_value': Loremipsum
       '#states':
         disabled:
           ':input[name="disabled_trigger"]':
@@ -2248,10 +2499,12 @@ settings:
   form_submit_once: false
   form_submit_attributes: {  }
   form_exception_message: ''
-  form_closed_message: ''
+  form_open_message: ''
+  form_close_message: ''
   form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
+  form_convert_anonymous: false
   form_prepopulate: false
   form_prepopulate_source_entity: false
   form_disable_autocomplete: false
@@ -2260,6 +2513,7 @@ settings:
   form_disable_back: false
   form_autofocus: false
   form_details_toggle: false
+  submission_log: false
   wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
@@ -2276,13 +2530,14 @@ settings:
   preview_prev_button_label: ''
   preview_prev_button_attributes: {  }
   preview_message: ''
-  draft: false
+  draft: none
   draft_auto_save: false
   draft_button_label: ''
   draft_button_attributes: {  }
   draft_saved_message: ''
   draft_loaded_message: ''
   confirmation_type: page
+  confirmation_title: ''
   confirmation_message: ''
   confirmation_url: ''
   confirmation_attributes: {  }

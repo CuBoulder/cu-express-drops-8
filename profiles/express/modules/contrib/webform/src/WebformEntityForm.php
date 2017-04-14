@@ -9,7 +9,7 @@ use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Url;
-use Drupal\webform\Utility\WebformYamlTidy;
+use Drupal\webform\Utility\WebformYaml;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -120,8 +120,8 @@ class WebformEntityForm extends BundleEntityFormBase {
     }
 
     $form = parent::buildForm($form, $form_state);
-    $form = $this->buildFormDialog($form, $form_state);
-    return $form;
+
+    return $this->buildFormDialog($form, $form_state);
   }
 
   /**
@@ -249,15 +249,15 @@ class WebformEntityForm extends BundleEntityFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    if ($response = $this->validateDialog($form, $form_state)) {
-      return $response;
-    }
-
     parent::submitForm($form, $form_state);
+    $form_state->setRedirectUrl($this->getRedirectUrl());
+  }
 
-    if ($this->isModalDialog()) {
-      return $this->redirectForm($form, $form_state, Url::fromRoute('entity.webform.edit_form', ['webform' => $this->getEntity()->id()]));
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getRedirectUrl() {
+    return Url::fromRoute('entity.webform.edit_form', ['webform' => $this->getEntity()->id()]);
   }
 
   /**
@@ -297,7 +297,7 @@ class WebformEntityForm extends BundleEntityFormBase {
     }
 
     $this->removeWebformTypePrefixRecursive($elements);
-    return WebformYamlTidy::tidy(Yaml::encode($elements));
+    return WebformYaml::tidy(Yaml::encode($elements));
   }
 
   /**
@@ -334,7 +334,7 @@ class WebformEntityForm extends BundleEntityFormBase {
     }
 
     $this->addWebformTypePrefixRecursive($elements);
-    return WebformYamlTidy::tidy(Yaml::encode($elements));
+    return WebformYaml::tidy(Yaml::encode($elements));
   }
 
   /**
