@@ -66,10 +66,10 @@ $config = array(
 
     'cu_boulder' => array(
       'saml:SP',
-      'entityID' => 'web-express-bulletin',
+      'entityID' => 'bulletin.colorado.edu',
       'privatekey' => 'saml.pem',
       'certificate' => 'saml.crt',
-      'idp' => 'https://fedauth-test.colorado.edu/idp/shibboleth',
+      'idp' => 'https://fedauth.colorado.edu/idp/shibboleth',
       'attributes' => array(
         'uid' => 'urn:oid:0.9.2342.19200300.100.1.1',
       ),
