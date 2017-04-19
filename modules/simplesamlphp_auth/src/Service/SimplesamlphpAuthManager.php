@@ -68,11 +68,6 @@ class SimplesamlphpAuthManager {
     else {
       $this->simplesamlConfig = $config;
     }
-
-    print '<pre>';
-    print_r($auth_source);
-    print_r($this->instance);
-    print '</pre>';
   }
 
   /**
@@ -160,6 +155,11 @@ class SimplesamlphpAuthManager {
    */
   public function getAttribute($attribute) {
     $attributes = $this->getAttributes();
+
+    print '<pre>';
+    print_r("SAML Attributes: \n");
+    print_r($attributes);
+    print '</pre>';
 
     if (isset($attributes)) {
       if (!empty($attributes[$attribute][0])) {
