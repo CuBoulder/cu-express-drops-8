@@ -173,6 +173,7 @@ class SimplesamlphpAuthManager {
    */
   public function allowUserByAttribute() {
     $attributes = $this->getAttributes();
+    print_r($attributes);
     foreach (\Drupal::moduleHandler()->getImplementations('simplesamlphp_auth_allow_login') as $module) {
       if (\Drupal::moduleHandler()->invoke($module, 'simplesamlphp_auth_allow_login', [$attributes]) === FALSE) {
         return FALSE;
