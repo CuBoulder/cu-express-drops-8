@@ -51,6 +51,9 @@ function simplesamlphp_auth_help($route_name) {
  */
 function simplesamlphp_auth_user_logout($account) {
 
+  print_r('Got to logout');
+  die();
+
   $logout_url = \Drupal::config('simplesamlphp_auth.settings')->get('logout_goto_url');
   $simplesaml = \Drupal::service('simplesamlphp_auth.manager');
 
