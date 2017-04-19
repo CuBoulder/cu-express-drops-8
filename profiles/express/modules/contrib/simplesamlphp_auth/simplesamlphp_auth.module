@@ -61,6 +61,10 @@ function simplesamlphp_auth_user_logout($account) {
   // manually here.
   session_destroy();
 
+  // Since we don't have the logout working, skip SAML logout.
+  return new RedirectResponse(\Drupal::url('<front>'));
+
+
   if ($logout_url) {
     $simplesaml->logout($logout_url);
   }

@@ -72,12 +72,6 @@ class SimplesamlSubscriber implements EventSubscriberInterface {
    */
   public function checkAuthStatus(GetResponseEvent $event) {
 
-    print '<pre>';
-    print_r("Checking Auth: \n");
-    print_r($event);
-    print '</pre>';
-    die();
-
     if ($this->account->isAnonymous()) {
       return;
     }
