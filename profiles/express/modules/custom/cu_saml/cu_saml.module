@@ -14,5 +14,5 @@ function cu_saml_module_implements_alter(&$implementations, $hook) {
 
 function cu_saml_user_logout($account) {
   session_destroy();
-  return new RedirectResponse(\Drupal::url('<front>'));
+  return new RedirectResponse(\Drupal::url('user.page'));
 }
