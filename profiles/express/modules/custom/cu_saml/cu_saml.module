@@ -6,8 +6,8 @@ function cu_saml_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'user_logout') {
     $group = $implementations['cu_saml'];
     unset($implementations['cu_saml']);
-    //$implementations = $group + $implementations;
-    array_unshift($implementations, $group);
+    $implementations = $group + $implementations;
+    //array_unshift($implementations, $group);
   }
 
 }
