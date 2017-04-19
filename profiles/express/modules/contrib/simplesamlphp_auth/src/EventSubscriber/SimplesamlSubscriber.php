@@ -100,7 +100,7 @@ class SimplesamlSubscriber implements EventSubscriberInterface {
     if ($this->config->get('debug')) {
       $this->logger->debug('User %name not authorized to log in using local account.', array('%name' => $this->account->getAccountName()));
     }
-    user_logout();
+    //user_logout();
 
     $response = new RedirectResponse('/', RedirectResponse::HTTP_FOUND);
     $event->setResponse($response);
