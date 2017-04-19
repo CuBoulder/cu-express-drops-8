@@ -1,7 +1,0 @@
-name: Back to top
-description: Adds a back to top link at the bottom of the browser window.
-package: CU-Core
-version: 8.x-1.0
-
-type: module
-core: 8.x
