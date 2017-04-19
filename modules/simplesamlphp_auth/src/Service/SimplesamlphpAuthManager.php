@@ -160,7 +160,6 @@ class SimplesamlphpAuthManager {
     print_r("SAML Attributes: \n");
     print_r($attributes);
     print '</pre>';
-    die();
 
     if (isset($attributes)) {
       if (!empty($attributes[$attribute][0])) {
