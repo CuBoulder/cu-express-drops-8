@@ -61,14 +61,12 @@ function simplesamlphp_auth_user_logout($account) {
   // manually here.
   session_destroy();
 
-  /*
   if ($logout_url) {
     $simplesaml->logout($logout_url);
   }
   else {
     $simplesaml->logout();
   }
-  */
 }
 
 /**

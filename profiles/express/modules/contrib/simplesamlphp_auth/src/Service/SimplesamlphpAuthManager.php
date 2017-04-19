@@ -200,8 +200,6 @@ class SimplesamlphpAuthManager {
    *   The path to redirect to after logout.
    */
   public function logout($redirect_path = NULL) {
-    return new RedirectResponse(\Drupal::url('<front>'));
-
     if (!$redirect_path) {
       $redirect_path = base_path();
     }
