@@ -38,6 +38,7 @@ function cu_saml_user_logout($account) {
   // Since the SAML logout URL isn't working, we need to destroy the user's session
   // and not send them to the SAML logout.
   session_destroy();
-  print_r('in hook logout');
+  setcookie('SimpleSAMLAuthToken', '', time() - 3600);
+  setcookie('SimpleSAMLSessionID', '', time() - 3600);
   return new RedirectResponse(Url::fromRoute('<front>'));
 }
