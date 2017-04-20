@@ -39,5 +39,5 @@ function cu_saml_user_logout($account) {
   // and not send them to the SAML logout.
   session_destroy();
   print_r('in hook logout');
-  return new RedirectResponse(Url::fromUri('/'));
+  return new RedirectResponse(Url::fromUri('<front>'));
 }
