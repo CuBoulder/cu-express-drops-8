@@ -1,19 +1,43 @@
 <?php
 
+/**
+ * @file
+ *
+ */
 
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * @param array $implementations
+ *   A list of modules implementing a certain hook.
+ * @param string $hook
+ *   The hook being passed in that implementations act upon.
+ */
 function cu_saml_module_implements_alter(&$implementations, $hook) {
-
+  // Place our logout hook first so we can stop the logout from SAML.
   if ($hook == 'user_logout') {
     $group = array('cu_saml' => $implementations['cu_saml']);
     unset($implementations['cu_saml']);
     $implementations = $group + $implementations;
-    //array_unshift($implementations, $group);
   }
-
 }
 
+/**
+ * Implements hook_user_logout().
+ *
+ * @param object $account
+ *   The user account being logged out.
+ *
+ * @return \Symfony\Component\HttpFoundation\RedirectResponse
+ *   A redirect to the homepage before SAML logout.
+ */
 function cu_saml_user_logout($account) {
+  // Since the SAML logout URL isn't working, we need to destroy the user's session
+  // and not send them to the SAML logout.
   session_destroy();
   print_r('in hook logout');
-  return new RedirectResponse(\Drupal::url('user.page'));
+  return new RedirectResponse(Url::fromUri('/'));
 }
