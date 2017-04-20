@@ -1,0 +1,4 @@
+cu_saml.logout:
+  path: '/logout'
+  defaults:
+    _controller: '\Drupal\simplesamlcu_saml\Controller\CuSamlController::logout'
