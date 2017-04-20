@@ -5,3 +5,8 @@ version: 8.x-1.0
 
 type: module
 core: 8.x
+
+dependencies:
+ - user
+ - externalauth
+ - simplesamlphp_auth
