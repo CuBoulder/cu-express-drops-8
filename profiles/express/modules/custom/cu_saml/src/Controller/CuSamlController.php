@@ -26,6 +26,6 @@ class CuSamlController extends ControllerBase {
     setcookie('SimpleSAMLSessionID', '', time() - 3600);
     $url = Url::fromRoute('<front>');
     $response = new RedirectResponse($url->toString());
-    $response->send();
+    return $response->send();
   }
 }
