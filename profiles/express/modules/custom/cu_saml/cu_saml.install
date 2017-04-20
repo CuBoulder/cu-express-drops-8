@@ -11,7 +11,7 @@ function cu_saml_install() {
   //$config = new CuSamlInstall(Drupal::configFactory());
   //$config->setupConfig();
 
-  $samlConfig = Drupal::configFactory()->get('simplesamlphp_auth.settings');
+  $samlConfig = Drupal::configFactory()->getEditable('simplesamlphp_auth.settings');
 
   $samlConfig->set('activate', true);
   $samlConfig->set('auth_source', 'cu_boulder');
