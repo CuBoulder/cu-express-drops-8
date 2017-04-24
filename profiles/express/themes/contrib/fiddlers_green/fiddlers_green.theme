@@ -11,7 +11,7 @@
 function fiddlers_green_preprocess_html(array &$variables) {
   kint($variables);
   kint(\Drupal::request()->getRequestUri());
-  $variables['attributes']['class'][] = ;
+  //$variables['attributes']['class'][] = ;
   /* Add class to html tag */
   //$variables['html_attributes']->addClass('no-js');
 
