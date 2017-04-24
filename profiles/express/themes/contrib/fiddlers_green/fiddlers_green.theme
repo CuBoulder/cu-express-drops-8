@@ -10,6 +10,8 @@
  */
 function fiddlers_green_preprocess_html(array &$variables) {
   kint($variables);
+  kint(\Drupal::request()->getRequestUri());
+  $variables['attributes']['class'][] = ;
   /* Add class to html tag */
   //$variables['html_attributes']->addClass('no-js');
 
@@ -23,7 +25,6 @@ function fiddlers_green_preprocess_html(array &$variables) {
  * Implements hook_page_attachments_alter().
  */
 function fiddlers_green_page_attachments_alter(array &$page) {
-  kint($page);
   // Tell IE to use latest rendering engine (not to use compatibility mode).
   /*$ie_edge = [
     '#type' => 'html_tag',
