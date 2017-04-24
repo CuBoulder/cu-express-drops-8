@@ -10,8 +10,10 @@
  */
 function fiddlers_green_preprocess_html(array &$variables) {
   kint($variables);
-  kint(\Drupal::request()->getRequestUri());
-  //$variables['attributes']['class'][] = ;
+  if (\Drupal::request()->getRequestUri() == "/admin/structure/webform/manage/post_bulletin/results/submissions") {
+    $variables['attributes']['class'][] = 'bulletin-submissions';
+  }
+
   /* Add class to html tag */
   //$variables['html_attributes']->addClass('no-js');
 
