@@ -1814,3 +1814,11 @@ em {
 .bulletin-submissions .region-help {
   display: none;
 }
+
+.bulletin-submissions ul.tabs--secondary.pagination.pagination-sm {
+  display: none;
+}
+
+.bulletin-submissions a.button.button-action.button--small.button-webform-setting.use-ajax {
+  display: none;
+}
