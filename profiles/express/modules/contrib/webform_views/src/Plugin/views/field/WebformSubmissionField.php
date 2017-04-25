@@ -2,10 +2,8 @@
 
 namespace Drupal\webform_views\Plugin\views\field;
 
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Plugin\views\argument_validator\Entity;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 use Drupal\webform\WebformElementManagerInterface;
@@ -68,13 +66,13 @@ class WebformSubmissionField extends FieldPluginBase {
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
 
-    $form['webform_element_format'] = array(
+    $form['webform_element_format'] = [
       '#type' => 'select',
       '#title' => $this->t('Format'),
       '#description' => $this->t('Specify how to format this value.'),
       '#options' => $this->getWebformElementPlugin()->getItemFormats(),
       '#default_value' => $this->options['webform_element_format'] ?: $this->getWebformElementPlugin()->getItemDefaultFormat(),
-    );
+    ];
 
     $form['webform_element_format']['#access'] = !empty($form['webform_element_format']['#options']);
   }
@@ -121,7 +119,7 @@ class WebformSubmissionField extends FieldPluginBase {
    */
   public function clickSort($order) {
     $webform_submission_data_alias = $this->ensureMyTable();
-    $params = $this->options['group_type'] != 'group' ? array('function' => $this->options['group_type']) : array();
+    $params = $this->options['group_type'] != 'group' ? ['function' => $this->options['group_type']] : [];
     $this->query->addOrderBy($webform_submission_data_alias, 'value', $order, '', $params);
   }
 

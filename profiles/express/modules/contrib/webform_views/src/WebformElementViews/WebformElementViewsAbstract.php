@@ -76,10 +76,10 @@ abstract class WebformElementViewsAbstract implements WebformElementViewsInterfa
 
     $data[$table_alias]['webform_submission_value'] = [
       'title' => Html::escape($element_title),
-      'help' => $this->t('Value of the field %field in webform %webform submission.', array(
+      'help' => $this->t('Value of the field %field in webform %webform submission.', [
         '%field' => $element_title,
         '%webform' => $webform->label(),
-      )),
+      ]),
     ];
 
     foreach ($this->getElementViewsData($element_plugin, $element) as $k => $v) {
