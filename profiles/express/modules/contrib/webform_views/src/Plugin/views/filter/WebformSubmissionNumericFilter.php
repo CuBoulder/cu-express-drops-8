@@ -6,7 +6,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\ElementInfoManagerInterface;
-use Drupal\views\Plugin\views\filter\NumericFilter;
+use Drupal\views\Plugin\views\filter\Date;
 use Drupal\webform_views\Plugin\views\WebformSubmissionCastToNumberTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ViewsFilter("webform_submission_numeric_filter")
  */
-class WebformSubmissionNumericFilter extends NumericFilter {
+class WebformSubmissionNumericFilter extends Date {
 
   use WebformSubmissionCastToNumberTrait;
 
