@@ -60,6 +60,7 @@ class WebformSubmissionNumericFilter extends Date {
   /**
    * {@inheritdoc}
    */
+  /*
   public function valueForm(&$form, FormStateInterface $form_state) {
     parent::valueForm($form, $form_state);
 
@@ -88,6 +89,7 @@ class WebformSubmissionNumericFilter extends Date {
       }
     }
   }
+  */
 
   /**
    * {@inheritdoc}
