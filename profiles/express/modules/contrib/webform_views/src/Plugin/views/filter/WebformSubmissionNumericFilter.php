@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class WebformSubmissionNumericFilter extends Date {
 
-  use WebformSubmissionCastToNumberTrait;
+  // use WebformSubmissionCastToNumberTrait;
 
   /**
    * @var EntityTypeManagerInterface
@@ -60,7 +60,6 @@ class WebformSubmissionNumericFilter extends Date {
   /**
    * {@inheritdoc}
    */
-  /*
   public function valueForm(&$form, FormStateInterface $form_state) {
     parent::valueForm($form, $form_state);
 
@@ -89,7 +88,6 @@ class WebformSubmissionNumericFilter extends Date {
       }
     }
   }
-  */
 
   /**
    * {@inheritdoc}
@@ -147,28 +145,6 @@ class WebformSubmissionNumericFilter extends Date {
     unset($operators['regular_expression']);
 
     return $operators;
-  }
-
-  /**
-   * Extract a property of a form element.
-   *
-   * @param array $element
-   *   Form element whose property to extract
-   * @param string $property
-   *   Property to extract
-   * @param mixed $default
-   *   Default value to use when the property is not defined in the provided
-   *   element
-   *
-   * @return mixed
-   *   The property value extracted from form element
-   */
-  protected function getFormElementProperty($element, $property, $default) {
-    if (isset($element[$property])) {
-      return $element[$property];
-    }
-
-    return $this->elementInfoManager->getInfoProperty($element['#type'], $property, $default);
   }
 
 }
