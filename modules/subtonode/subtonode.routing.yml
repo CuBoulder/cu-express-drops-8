@@ -1,0 +1,6 @@
+subtonode:
+  path: '/admin/structure/webform/manage/{webform}/submission/{sid}/subtonode'
+  defaults:
+    _controller: '\Drupal\subtonode\Controller\SubToNodeController::subtonode'
+  requirements:
+    _permission: 'access content'
