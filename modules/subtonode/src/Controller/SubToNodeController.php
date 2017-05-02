@@ -1,12 +1,11 @@
 <?php
 
 /**
- *
+ * This does whatever it wants to.
  */
 
 namespace Drupal\subtonode\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\node\Entity\Node;
@@ -14,9 +13,9 @@ use Drupal\file\Entity\File;
 use Drupal\Core\Datetime;
 
 class SubToNodeController extends ControllerBase {
-  public function subtonode($sid) {
+  public function subtonode($webform_submission) {
     //$sid = 2;
-    $node_details = WebformSubmission::load($sid);
+    $node_details = WebformSubmission::load($webform_submission);
     $wf_changed = $node_details->getChangedTime();
     $submission_array = $node_details->getOriginalData();
     $title = $submission_array['title'];
@@ -48,6 +47,7 @@ class SubToNodeController extends ControllerBase {
         'summary' => '',
         'format' => 'markdown',
       ],
+      'field_bulletin_audience' => '',
       'field_bulletin_contact_name' => $contact_name,
       'field_contact_name' => '',
       'field_bulletin_contact_email' => $contact_email,
@@ -55,7 +55,7 @@ class SubToNodeController extends ControllerBase {
       'field_bulletin_desired_publicati' => $timestamp,
       'field_desired_publication_date' => '',
       'field_bulletin_reference_submiss' => [
-        'target_id' => $sid,
+        'target_id' => $webform_submission,
       ],
       'field_bulletin_contact_website' => [
         'uri' => $contact_website_uri,
@@ -67,9 +67,20 @@ class SubToNodeController extends ControllerBase {
         'title' => 'Goodbye world'
       ],
     ]);
+
+    $target_ids_aud = $submission_array['audience'];
+    foreach($target_ids_aud as $target_id){
+      $node->field_bulletin_audience->AppendItem($target_id);
+    }
+
+    $target_ids_cat = $submission_array['category'];
+    foreach($target_ids_cat as $target_id){
+      $node->field_bulletin_category->AppendItem($target_id);
+    }
+
     $node->save();
 
-    return drupal_set_message(t('You have successfully created a node from webform submission @sid', array('@sid' => $sid)), 'success');;
+    return drupal_set_message(t('You have successfully created a node from webform submission @sid', array('@sid' => $webform_submission)), 'success');;
   }
 }
 
