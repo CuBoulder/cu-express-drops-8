@@ -1,7 +1,7 @@
 .bulletin-title {
   margin-bottom: -20px;
 }
-.bulletin-image {
+.bulletin-image, .field--name-field-photo img {
   float: left;
   margin: 0 2% 2% 0;
   max-width: 33.34%;
@@ -9,6 +9,14 @@
 }
 .bulletin-body {
 
+}
+.field--name-field-bulletin-contact-name, .field--name-field-bulletin-desired-publicati {
+  float: left;
+  padding-right: 0.5em;
+
+  &:after {
+    content: ' | '
+  }
 }
 .bulletin-footer {
   clear: both;

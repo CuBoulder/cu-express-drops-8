@@ -273,7 +273,7 @@ section {
 }
 
 /* line 4, ../scss/_bulletin.scss */
-.bulletin-image {
+.bulletin-image, .field--name-field-photo img {
   float: left;
   margin: 0 2% 2% 0;
   max-width: 33.34%;
@@ -281,6 +281,16 @@ section {
 }
 
 /* line 13, ../scss/_bulletin.scss */
+.field--name-field-bulletin-contact-name, .field--name-field-bulletin-desired-publicati {
+  float: left;
+  padding-right: 0.5em;
+}
+/* line 17, ../scss/_bulletin.scss */
+.field--name-field-bulletin-contact-name:after, .field--name-field-bulletin-desired-publicati:after {
+  content: " | ";
+}
+
+/* line 21, ../scss/_bulletin.scss */
 .bulletin-footer {
   clear: both;
   background: #f7f7f7;
@@ -289,31 +299,31 @@ section {
   border-bottom: 1px solid #e2e2e2;
 }
 
-/* line 20, ../scss/_bulletin.scss */
+/* line 28, ../scss/_bulletin.scss */
 .form-inline .form-control {
   width: 100% !important;
 }
 
-/* line 23, ../scss/_bulletin.scss */
+/* line 31, ../scss/_bulletin.scss */
 #edit-webform-submission-value-1--2.form-control {
   font-size: 20px;
 }
 
-/* line 27, ../scss/_bulletin.scss */
+/* line 35, ../scss/_bulletin.scss */
 div.webform-options-display-one-column .form-item, div#edit-webform-submission-value-1--2--wrapper .form-item {
   margin-right: 26%;
 }
 
 /* Portrait and Landscape */
 @media only screen and (min-device-width: 768px) {
-  /* line 33, ../scss/_bulletin.scss */
+  /* line 41, ../scss/_bulletin.scss */
   div.view-filters {
     float: right;
     width: 24%;
     overflow: hidden;
   }
 
-  /* line 38, ../scss/_bulletin.scss */
+  /* line 46, ../scss/_bulletin.scss */
   div.view-content {
     float: left;
     width: 74%;
@@ -1809,16 +1819,4 @@ em {
   min-height: 1px;
   padding-right: 20px;
   padding-left: 20px;
-}
-
-.bulletin-submissions .region-help {
-  display: none;
-}
-
-.bulletin-submissions ul.tabs--secondary.pagination.pagination-sm {
-  display: none;
-}
-
-.bulletin-submissions a.button.button-action.button--small.button-webform-setting.use-ajax {
-  display: none;
 }
