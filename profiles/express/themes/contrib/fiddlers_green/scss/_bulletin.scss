@@ -22,7 +22,6 @@
   clear: both;
   background: #f7f7f7;
   margin-top: 1%;
-  margin-bottom: 5%;
   padding: 1%;
   border-bottom: 1px solid #e2e2e2;
 }
@@ -47,5 +46,8 @@ div.webform-options-display-one-column .form-item, div#edit-webform-submission-v
   div.view-content {
     float: left;
     width: 74%;
+  }
+  nav.pager-nav {
+    clear: both;
   }
 }
