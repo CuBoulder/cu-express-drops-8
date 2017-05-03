@@ -295,35 +295,36 @@ section {
   clear: both;
   background: #f7f7f7;
   margin-top: 1%;
+  margin-bottom: 5%;
   padding: 1%;
   border-bottom: 1px solid #e2e2e2;
 }
 
-/* line 28, ../scss/_bulletin.scss */
+/* line 29, ../scss/_bulletin.scss */
 .form-inline .form-control {
   width: 100% !important;
 }
 
-/* line 31, ../scss/_bulletin.scss */
+/* line 32, ../scss/_bulletin.scss */
 #edit-webform-submission-value-1--2.form-control {
   font-size: 20px;
 }
 
-/* line 35, ../scss/_bulletin.scss */
+/* line 36, ../scss/_bulletin.scss */
 div.webform-options-display-one-column .form-item, div#edit-webform-submission-value-1--2--wrapper .form-item {
   margin-right: 26%;
 }
 
 /* Portrait and Landscape */
 @media only screen and (min-device-width: 768px) {
-  /* line 41, ../scss/_bulletin.scss */
+  /* line 42, ../scss/_bulletin.scss */
   div.view-filters {
     float: right;
     width: 24%;
     overflow: hidden;
   }
 
-  /* line 46, ../scss/_bulletin.scss */
+  /* line 47, ../scss/_bulletin.scss */
   div.view-content {
     float: left;
     width: 74%;
