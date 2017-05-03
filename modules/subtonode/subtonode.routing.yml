@@ -4,4 +4,4 @@ subtonode.create_node:
     _controller: '\Drupal\subtonode\Controller\SubToNodeController::subtonode'
     _title: 'Create Node'
   requirements:
-    _permission: 'administer webform submissions'
+    _permission: 'administer webform submission'
