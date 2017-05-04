@@ -47,7 +47,6 @@ class SubToNodeController extends ControllerBase {
         'summary' => '',
         'format' => 'markdown',
       ],
-      'field_bulletin_audience' => '',
       'field_bulletin_contact_name' => $contact_name,
       'field_contact_name' => '',
       'field_bulletin_contact_email' => $contact_email,
@@ -68,14 +67,18 @@ class SubToNodeController extends ControllerBase {
       ],
     ]);
 
-    $target_ids_aud = $submission_array['audience'];
-    foreach($target_ids_aud as $target_id){
-      $node->field_bulletin_audience->AppendItem($target_id);
+    if (!empty($submission_array['audience'])) {
+      $target_ids_aud = $submission_array['audience'];
+      foreach ($target_ids_aud as $target_id) {
+        $node->field_bulletin_audience->AppendItem($target_id);
+      }
     }
 
-    $target_ids_cat = $submission_array['category'];
-    foreach($target_ids_cat as $target_id){
-      $node->field_bulletin_category->AppendItem($target_id);
+    if (!empty($submission_array['category'])) {
+      $target_ids_cat = $submission_array['category'];
+      foreach ($target_ids_cat as $target_id) {
+        $node->field_bulletin_category->AppendItem($target_id);
+      }
     }
 
     $node->save();
