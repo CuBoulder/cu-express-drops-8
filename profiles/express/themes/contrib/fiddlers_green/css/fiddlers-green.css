@@ -298,50 +298,51 @@ section {
   margin-bottom: 5%;
   padding: 1%;
   border-bottom: 1px solid #e2e2e2;
+  overflow: hidden;
 }
 
-/* line 29, ../scss/_bulletin.scss */
+/* line 30, ../scss/_bulletin.scss */
 .form-inline .form-control {
   width: 100% !important;
 }
 
-/* line 32, ../scss/_bulletin.scss */
+/* line 33, ../scss/_bulletin.scss */
 #edit-webform-submission-value-1--2.form-control {
   font-size: 20px;
 }
 
-/* line 36, ../scss/_bulletin.scss */
+/* line 37, ../scss/_bulletin.scss */
 div.webform-options-display-one-column .form-item, div#edit-webform-submission-value-1--2--wrapper .form-item {
   margin-right: 26%;
 }
 
 /* Portrait and Landscape */
 @media only screen and (min-device-width: 768px) {
-  /* line 42, ../scss/_bulletin.scss */
+  /* line 43, ../scss/_bulletin.scss */
   div.view-filters {
     float: right;
     width: 24%;
     overflow: hidden;
   }
 
-  /* line 47, ../scss/_bulletin.scss */
+  /* line 48, ../scss/_bulletin.scss */
   div.view-content {
     float: left;
     width: 74%;
   }
 
-  /* line 51, ../scss/_bulletin.scss */
+  /* line 52, ../scss/_bulletin.scss */
   nav.pager-nav {
     clear: both;
   }
 
-  /* line 54, ../scss/_bulletin.scss */
+  /* line 55, ../scss/_bulletin.scss */
   #block-logintocreatebulletins, #block-viewmysubmissions {
     margin: 0 0 0 900px;
     padding-top: 10px;
   }
 
-  /* line 58, ../scss/_bulletin.scss */
+  /* line 59, ../scss/_bulletin.scss */
   #block-logintocreatebulletins a, #block-viewmysubmissions a {
     margin-top: 1%;
     float: right;

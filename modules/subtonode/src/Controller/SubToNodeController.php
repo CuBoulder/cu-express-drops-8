@@ -9,8 +9,7 @@ namespace Drupal\subtonode\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\webform\Entity\WebformSubmission;
 use Drupal\node\Entity\Node;
-use Drupal\file\Entity\File;
-use Drupal\Core\Datetime;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SubToNodeController extends ControllerBase {
   public function subtonode($webform_submission) {
@@ -83,7 +82,12 @@ class SubToNodeController extends ControllerBase {
 
     $node->save();
 
-    return drupal_set_message(t('You have successfully created a node from webform submission @sid', array('@sid' => $webform_submission)), 'success');;
+    $url = '/admin/content/webform';
+    $response = new RedirectResponse($url);
+    //$response->send(); // don't send the response yourself inside controller and form.
+
+    drupal_set_message(t('You have successfully created a node from webform submission @sid', array('@sid' => $webform_submission)), 'success');
+    return $response->send();
   }
 }
 
