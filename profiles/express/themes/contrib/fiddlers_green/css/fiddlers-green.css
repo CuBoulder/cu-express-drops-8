@@ -334,6 +334,19 @@ div.webform-options-display-one-column .form-item, div#edit-webform-submission-v
   nav.pager-nav {
     clear: both;
   }
+
+  /* line 54, ../scss/_bulletin.scss */
+  #block-logintocreatebulletins, #block-viewmysubmissions {
+    margin: 0 0 0 900px;
+    padding-top: 10px;
+  }
+
+  /* line 58, ../scss/_bulletin.scss */
+  #block-logintocreatebulletins a, #block-viewmysubmissions a {
+    margin-top: 1%;
+    float: right;
+    color: black;
+  }
 }
 /* line 1, ../scss/components/_blocks.scss */
 .block {
@@ -349,19 +362,6 @@ div.webform-options-display-one-column .form-item, div#edit-webform-submission-v
 /* line 8, ../scss/components/_blocks.scss */
 .new-block-row {
   clear: both;
-}
-
-/* line 11, ../scss/components/_blocks.scss */
-#block-logintocreatebulletins, #block-viewmysubmissions {
-  margin: 0 0 0 900px;
-  padding-top: 10px;
-}
-
-/* line 15, ../scss/components/_blocks.scss */
-#block-logintocreatebulletins a, #block-viewmysubmissions a {
-  margin-top: 1%;
-  float: right;
-  color: black;
 }
 
 /* line 3, ../scss/components/_branding.scss */

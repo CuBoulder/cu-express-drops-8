@@ -51,4 +51,13 @@ div.webform-options-display-one-column .form-item, div#edit-webform-submission-v
   nav.pager-nav {
     clear: both;
   }
+  #block-logintocreatebulletins, #block-viewmysubmissions {
+    margin: 0 0 0 900px;
+    padding-top: 10px;
+  }
+  #block-logintocreatebulletins a, #block-viewmysubmissions a {
+    margin-top: 1%;
+    float: right;
+    color: black;
+  }
 }
