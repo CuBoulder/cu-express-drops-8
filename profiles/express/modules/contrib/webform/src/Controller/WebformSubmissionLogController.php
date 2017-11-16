@@ -6,7 +6,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Url;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformRequestInterface;
 use Drupal\webform\WebformSubmissionInterface;
@@ -15,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Returns responses for webform submission log routes.
  *
- * Copied from: \Drupal\dblog\Controller\DbLogController
+ * Copied from: \Drupal\dblog\Controller\DbLogController.
  */
 class WebformSubmissionLogController extends ControllerBase {
 
@@ -62,7 +61,7 @@ class WebformSubmissionLogController extends ControllerBase {
   protected $requestHandler;
 
   /**
-   * Constructs a DbLogController object.
+   * Constructs a WebformSubmissionLogController object.
    *
    * @param \Drupal\Core\Database\Connection $database
    *   A database connection.
@@ -193,13 +192,11 @@ class WebformSubmissionLogController extends ControllerBase {
       if (empty($webform_submission)) {
         if ($log->sid) {
           $log_webform_submission = $this->webformSubmissionStorage->load($log->sid);
-          $route_name = $this->requestHandler->getRouteName($log_webform_submission, $source_entity, 'webform_submission.log');
-          $route_parameters = $this->requestHandler->getRouteParameters($log_webform_submission, $source_entity);
           $row['sid'] = [
             'data' => [
               '#type' => 'link',
               '#title' => $log->sid,
-              '#url' => Url::fromRoute($route_name, $route_parameters),
+              '#url' => $this->requestHandler->getUrl($log_webform_submission, $source_entity, 'webform_submission.log'),
             ],
           ];
         }

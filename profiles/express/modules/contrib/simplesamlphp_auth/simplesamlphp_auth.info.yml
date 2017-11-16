@@ -7,8 +7,8 @@ dependencies:
  - user
  - externalauth
 
-# Information added by Drupal.org packaging script on 2017-03-17
-version: '8.x-3.0-rc1'
+# Information added by Drupal.org packaging script on 2017-04-13
+version: '8.x-3.0-rc2'
 core: '8.x'
 project: 'simplesamlphp_auth'
-datestamp: 1489760886
+datestamp: 1492065547

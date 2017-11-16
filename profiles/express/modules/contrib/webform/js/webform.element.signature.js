@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for signature pad integration.
+ * JavaScript behaviors for signature pad integration.
  */
 
 (function ($, Drupal) {
@@ -19,14 +19,17 @@
    */
   Drupal.behaviors.webformSignature = {
     attach: function (context) {
+      if (!window.SignaturePad) {
+        return;
+      }
+
       $(context).find('input.js-webform-signature').once('webform-signature').each(function () {
         var $input = $(this);
         var value = $input.val();
         var $wrapper = $input.parent();
         var $canvas = $wrapper.find('canvas');
-        var $button = $wrapper.find('input[type="submit"]');
+        var $button = $wrapper.find(':button, :submit');
         var canvas = $canvas[0];
-
         // Set height.
         $canvas.attr('width', $wrapper.width());
         $canvas.attr('height', $wrapper.width() / 3);

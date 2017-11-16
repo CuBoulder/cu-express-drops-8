@@ -5,6 +5,7 @@ namespace Drupal\webform;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\OptGroup;
+use Drupal\Core\Url;
 use Drupal\webform\Entity\WebformOptions;
 
 /**
@@ -13,6 +14,26 @@ use Drupal\webform\Entity\WebformOptions;
  * @see \Drupal\webform\Entity\WebformOption
  */
 class WebformOptionsListBuilder extends ConfigEntityListBuilder {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function render() {
+    $build = [];
+
+    // Display info.
+    if ($total = $this->getStorage()->getQuery()->count()->execute()) {
+      $build['info'] = [
+        '#markup' => $this->formatPlural($total, '@total option', '@total options', ['@total' => $total]),
+        '#prefix' => '<div>',
+        '#suffix' => '</div>',
+      ];
+    }
+
+    $build += parent::render();
+
+    return $build;
+  }
 
   /**
    * {@inheritdoc}
@@ -41,7 +62,8 @@ class WebformOptionsListBuilder extends ConfigEntityListBuilder {
     $row['id'] = $entity->id();
     $row['category'] = $entity->get('category');
 
-    $options = WebformOptions::getElementOptions(['#options' => $entity->id()]);
+    $element = ['#options' => $entity->id()];
+    $options = WebformOptions::getElementOptions($element);
     $options = OptGroup::flattenOptions($options);
     foreach ($options as $key => &$value) {
       if ($key != $value) {
@@ -52,6 +74,21 @@ class WebformOptionsListBuilder extends ConfigEntityListBuilder {
 
     $row['alter'] = $entity->hasAlterHooks() ? $this->t('Yes') : $this->t('No');
     return $row + parent::buildRow($entity);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDefaultOperations(EntityInterface $entity, $type = 'edit') {
+    $operations = parent::getDefaultOperations($entity);
+    if ($entity->access('duplicate')) {
+      $operations['duplicate'] = [
+        'title' => $this->t('Duplicate'),
+        'weight' => 23,
+        'url' => Url::fromRoute('entity.webform_options.duplicate_form', ['webform_options' => $entity->id()]),
+      ];
+    }
+    return $operations;
   }
 
 }

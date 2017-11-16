@@ -1,0 +1,16 @@
+name: Demo Express
+type: profile
+description: 'Demo express installation profile'
+# core: 8.x
+# version: '8.x-1.x'
+
+# Base profile
+'base profile': express_base
+
+themes:
+  - demo_theme
+# Information added by Drupal.org packaging script on 2017-11-06
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'express'
+datestamp: 1509983891

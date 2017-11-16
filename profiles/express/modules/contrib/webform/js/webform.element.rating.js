@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for RateIt integration.
+ * JavaScript behaviors for RateIt integration.
  */
 
 (function ($, Drupal) {
@@ -17,6 +17,10 @@
    */
   Drupal.behaviors.webformRating = {
     attach: function (context) {
+      if (!$.fn.rateit) {
+        return;
+      }
+
       $(context)
         .find('[data-rateit-backingfld]')
         .once('webform-rating')

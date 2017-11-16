@@ -1,7 +1,7 @@
 <?php
-/* 
- * The configuration of SimpleSAMLphp
- * 
+/**
+ * @file
+ * The configuration of SimpleSAMLphp.
  */
 
 if (!ini_get('session.save_handler')) {
@@ -84,7 +84,7 @@ $config = array(
      * metadata listing and diagnostics pages.
      * You can also put a hash here; run "bin/pwgen.php" to generate one.
      */
-    'auth.adminpassword' => 'waffles4',
+    'auth.adminpassword' => '1tZ17ZeS!8@1VC',
     'admin.protectindexpage' => false,
     'admin.protectmetadata' => false,
 
@@ -103,8 +103,8 @@ $config = array(
      * The email address will be used as the recipient address for error reports, and
      * also as the technical contact in generated metadata.
      */
-    'technicalcontact_name' => 'Alex Finnarn',
-    'technicalcontact_email' => 'alexander.finnarn@colorado.edu',
+  'technicalcontact_name' => 'Web Express Admin',
+  'technicalcontact_email' => 'OSR-DL-WEBDEV@colorado.edu',
 
     /*
      * The timezone of the server. This option should be set to the timezone you want
@@ -268,7 +268,7 @@ $config = array(
      * one of the functionalities below, but in some cases you could run multiple functionalities.
      * In example when you are setting up a federation bridge.
      */
-    'enable.saml20-idp' => false,
+    'enable.saml20-idp' => true,
     'enable.shib13-idp' => false,
     'enable.adfs-idp' => false,
     'enable.wsfed-sp' => false,

@@ -138,6 +138,7 @@ class SimpleSAML_Auth_Simple {
 		}
 
 		$as = $this->getAuthSource();
+
 		$as->initLogin($returnTo, $errorURL, $params);
 		assert('FALSE');
 	}
@@ -187,15 +188,21 @@ class SimpleSAML_Auth_Simple {
 				$params = array_merge($state, $params);
 			}
 
+
+
 			$session->doLogout($this->authSource);
 
 			$params['LogoutCompletedHandler'] = array(get_class(), 'logoutCompleted');
 
 			$as = SimpleSAML_Auth_Source::getById($this->authSource);
+
+
+
 			if ($as !== NULL) {
 				$as->logout($params);
 			}
 		}
+
 
 		self::logoutCompleted($params);
 	}
@@ -222,6 +229,7 @@ class SimpleSAML_Auth_Simple {
 				$stateID = SimpleSAML_Auth_State::saveState($state, $state['ReturnStateStage']);
 				$params[$state['ReturnStateParam']] = $stateID;
 			}
+
 			\SimpleSAML\Utils\HTTP::redirectTrustedURL($state['ReturnTo'], $params);
 		}
 	}

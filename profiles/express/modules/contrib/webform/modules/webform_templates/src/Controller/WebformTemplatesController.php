@@ -45,7 +45,7 @@ class WebformTemplatesController extends ControllerBase implements ContainerInje
    * Constructs a WebformTemplatesController object.
    *
    * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   Current user.
+   *   The current user.
    * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
    *   The webform builder.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
@@ -80,6 +80,7 @@ class WebformTemplatesController extends ControllerBase implements ContainerInje
    */
   public function index(Request $request) {
     $keys = $request->get('search');
+    $category = $request->get('category');
 
     // Handler autocomplete redirect.
     if ($keys && preg_match('#\(([^)]+)\)$#', $keys, $match)) {
@@ -91,37 +92,31 @@ class WebformTemplatesController extends ControllerBase implements ContainerInje
     $header = [
       $this->t('Title'),
       ['data' => $this->t('Description'), 'class' => [RESPONSIVE_PRIORITY_LOW]],
+      ['data' => $this->t('Category'), 'class' => [RESPONSIVE_PRIORITY_LOW]],
       ['data' => $this->t('Operations'), 'colspan' => 2],
     ];
 
-    $webforms = $this->getTemplates($keys);
+    $webforms = $this->getTemplates($keys, $category);
     $rows = [];
     foreach ($webforms as $webform) {
       $route_parameters = ['webform' => $webform->id()];
 
       $row['title'] = $webform->toLink();
-      $row['description']['data']['description']['#markup'] = $webform->get('description');
+      $row['description']['data']['#markup'] = $webform->get('description');
+      $row['category']['data']['#markup'] = $webform->get('category');
       if ($this->currentUser->hasPermission('create webform')) {
-        $row['select']['data'] = [
-          '#type' => 'operations',
-          '#links' => [
-            'duplicate' => [
-              'title' => $this->t('Select'),
-              'url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
-              'attributes' => WebformDialogHelper::getModalDialogAttributes(700),
-            ],
-          ],
+        $row['operations']['data']['select'] = [
+          '#type' => 'link',
+          '#title' => $this->t('Select'),
+          '#url' => Url::fromRoute('entity.webform.duplicate_form', $route_parameters),
+          '#attributes' => WebformDialogHelper::getModalDialogAttributes(700, ['button', 'button--primary']),
         ];
       }
-      $row['preview']['data'] = [
-        '#type' => 'operations',
-        '#links' => [
-          'preview' => [
-            'title' => $this->t('Preview'),
-            'url' => Url::fromRoute('entity.webform.preview', $route_parameters),
-            'attributes' => WebformDialogHelper::getModalDialogAttributes(800),
-          ],
-        ],
+      $row['operations']['data']['preview'] = [
+        '#type' => 'link',
+        '#title' => $this->t('Preview'),
+        '#url' => Url::fromRoute('entity.webform.preview', $route_parameters),
+        '#attributes' => WebformDialogHelper::getModalDialogAttributes(800, ['button']),
       ];
       $rows[] = $row;
     }
@@ -131,12 +126,8 @@ class WebformTemplatesController extends ControllerBase implements ContainerInje
 
     // Display info.
     if ($total = count($rows)) {
-      $t_args = [
-        '@total' => count($rows),
-        '@results' => $this->formatPlural($total, $this->t('template'), $this->t('templates')),
-      ];
       $build['info'] = [
-        '#markup' => $this->t('@total @results', $t_args),
+        '#markup' => $this->formatPlural($total, '@total template', '@total templates', ['@total' => $total]),
         '#prefix' => '<div>',
         '#suffix' => '</div>',
       ];
@@ -182,12 +173,14 @@ class WebformTemplatesController extends ControllerBase implements ContainerInje
    * Get webform templates.
    *
    * @param string $keys
-   *   (optional) Filter templates by key word.
+   *   (optional) Filter templates by keyword.
+   * @param string $category
+   *   (optional) Filter templates by category.
    *
    * @return array|\Drupal\Core\Entity\EntityInterface[]
    *   An array webform entity that are used as templates.
    */
-  protected function getTemplates($keys = '') {
+  protected function getTemplates($keys = '', $category = '') {
     $query = $this->webformStorage->getQuery();
     $query->condition('template', TRUE);
     // Filter by key(word).
@@ -195,8 +188,14 @@ class WebformTemplatesController extends ControllerBase implements ContainerInje
       $or = $query->orConditionGroup()
         ->condition('title', $keys, 'CONTAINS')
         ->condition('description', $keys, 'CONTAINS')
+        ->condition('category', $keys, 'CONTAINS')
         ->condition('elements', $keys, 'CONTAINS');
       $query->condition($or);
+    }
+
+    // Filter by category.
+    if ($category) {
+      $query->condition('category', $category);
     }
 
     $query->sort('title');

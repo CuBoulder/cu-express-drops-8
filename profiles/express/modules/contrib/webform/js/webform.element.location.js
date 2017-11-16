@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for Geocomplete location integration.
+ * JavaScript behaviors for Geocomplete location integration.
  */
 
 (function ($, Drupal, drupalSettings) {
@@ -20,7 +20,11 @@
    */
   Drupal.behaviors.webformLocationGeocomplete = {
     attach: function (context) {
-      $(context).find('div.js-webform-location').once('webform-location').each(function () {
+      if (!$.fn.geocomplete) {
+        return;
+      }
+
+      $(context).find('div.js-form-type-webform-location').once('webform-location').each(function () {
         var $element = $(this);
         var $input = $element.find('.webform-location-geocomplete');
         var $map = null;

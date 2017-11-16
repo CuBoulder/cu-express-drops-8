@@ -2,6 +2,7 @@
 
 namespace Drupal\Core\Config;
 
+
 use Drupal\Core\Extension\ExtensionDiscovery;
 
 /**
@@ -55,6 +56,7 @@ class ExtensionInstallStorage extends InstallStorage {
    */
   public function __construct(StorageInterface $config_storage, $directory = self::CONFIG_INSTALL_DIRECTORY, $collection = StorageInterface::DEFAULT_COLLECTION, $include_profile = TRUE, $profile = NULL) {
     parent::__construct($directory, $collection);
+
     $this->configStorage = $config_storage;
     $this->includeProfile = $include_profile;
     if (is_null($profile)) {

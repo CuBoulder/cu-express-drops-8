@@ -1,0 +1,14 @@
+uuid: cad7193a-19bc-43e0-9c0f-bae09c346960
+name: Express8
+mail: asdf@asdf.com
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node/1
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo

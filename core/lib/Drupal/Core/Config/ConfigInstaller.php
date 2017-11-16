@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\Entity\ConfigDependencyManager;
 use Drupal\Core\Config\Entity\ConfigEntityDependency;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConfigInstaller implements ConfigInstallerInterface {
@@ -90,6 +91,7 @@ class ConfigInstaller implements ConfigInstallerInterface {
    *   The name of the currently active installation profile.
    */
   public function __construct(ConfigFactoryInterface $config_factory, StorageInterface $active_storage, TypedConfigManagerInterface $typed_config, ConfigManagerInterface $config_manager, EventDispatcherInterface $event_dispatcher, $install_profile) {
+
     $this->configFactory = $config_factory;
     $this->activeStorages[$active_storage->getCollectionName()] = $active_storage;
     $this->typedConfig = $typed_config;
@@ -192,7 +194,7 @@ class ConfigInstaller implements ConfigInstallerInterface {
     $existing_config = $this->getActiveStorages()->listAll();
 
     $list = array_unique(array_merge($storage->listAll(), $optional_profile_config));
-    $list = array_filter($list, function($config_name) use ($existing_config) {
+    $list = array_filter($list, function ($config_name) use ($existing_config) {
       // Only list configuration that:
       // - does not already exist
       // - is a configuration entity (this also excludes config that has an
@@ -473,11 +475,12 @@ class ConfigInstaller implements ConfigInstallerInterface {
     // Check the dependencies of configuration provided by the module.
     list($invalid_default_config, $missing_dependencies) = $this->findDefaultConfigWithUnmetDependencies($storage, $enabled_extensions, $profile_storages);
     if (!empty($invalid_default_config)) {
-      throw UnmetDependenciesException::create($name, array_unique($missing_dependencies));
+      throw UnmetDependenciesException::create($name, array_unique($missing_dependencies, SORT_REGULAR));
     }
 
     // Install profiles can not have config clashes. Configuration that
     // has the same name as a module's configuration will be used instead.
+    /*
     $profiles = $this->profileHandler->getProfiles();
     if (!isset($profiles[$name])) {
       // Throw an exception if the module being installed contains configuration
@@ -488,6 +491,7 @@ class ConfigInstaller implements ConfigInstallerInterface {
         throw PreExistingConfigException::create($name, $existing_configuration);
       }
     }
+    */
   }
 
   /**

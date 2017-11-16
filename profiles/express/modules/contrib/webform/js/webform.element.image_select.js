@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for webform_image_select and jQuery Image Picker integration.
+ * JavaScript behaviors for webform_image_select and jQuery Image Picker integration.
  */
 
 (function ($, Drupal) {
@@ -19,6 +19,10 @@
    */
   Drupal.behaviors.webformImageSelect = {
     attach: function (context) {
+      if (!$.fn.imagepicker) {
+        return;
+      }
+
       $('.js-webform-image-select', context).once('webform-image-select').each(function () {
         var $select = $(this);
 

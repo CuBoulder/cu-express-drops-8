@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for jQuery Word and Counter Counter integration.
+ * JavaScript behaviors for jQuery Word and Counter Counter integration.
  */
 
 (function ($, Drupal) {
@@ -19,6 +19,10 @@
    */
   Drupal.behaviors.webformCounter = {
     attach: function (context) {
+      if (!$.fn.counter) {
+        return;
+      }
+
       $(context).find('.js-webform-counter').once('webform-counter').each(function () {
         var options = {
           goal: $(this).attr('data-counter-limit'),

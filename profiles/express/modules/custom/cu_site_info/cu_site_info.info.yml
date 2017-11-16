@@ -2,4 +2,16 @@ name: CU Site Information Block
 type: module
 description: Fill in with contact information
 package: CU-Core
-core: 8.x
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2017-10-30
+# version: '8.x-1.x-dev'
+# core: '8.x'
+# project: 'express'
+# datestamp: 1509387800
+
+# Information added by Drupal.org packaging script on 2017-11-06
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'express'
+datestamp: 1509983891

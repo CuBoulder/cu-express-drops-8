@@ -1,6 +1,6 @@
 /**
  * @file
- * Javascript behaviors for iCheck integration.
+ * JavaScript behaviors for iCheck integration.
  */
 
 (function ($, Drupal) {
@@ -12,6 +12,17 @@
   Drupal.webform.iCheck = Drupal.webform.iCheck || {};
   Drupal.webform.iCheck.options = Drupal.webform.iCheck.options || {};
 
+  function initializeCheckbox($input, options) {
+    $input.addClass('js-webform-icheck')
+      .iCheck(options)
+      // @see https://github.com/fronteed/iCheck/issues/244
+      .on('ifChecked', function (e) {
+        $(e.target).attr('checked', 'checked').change();
+      })
+      .on('ifUnchecked', function (e) {
+        $(e.target).removeAttr('checked').change();
+      });
+  }
   /**
    * Enhance checkboxes and radios using iCheck.
    *
@@ -19,15 +30,31 @@
    */
   Drupal.behaviors.webformICheck = {
     attach: function (context) {
-      $('[data-webform-icheck]', context).each(function () {
-        var icheck = $(this).attr('data-webform-icheck');
+      if (!$.fn.iCheck) {
+        return;
+      }
+      $('input[data-webform-icheck]', context).each(function () {
+        var $input = $(this);
+        var icheck = $input.attr('data-webform-icheck');
 
         var options = $.extend({
           checkboxClass: 'icheckbox_' + icheck,
           radioClass: 'iradio_' + icheck
         }, Drupal.webform.iCheck.options);
 
-        $(this).find('input').addClass('js-webform-icheck')
+        // The line skin requires that the label be added to the options.
+        // @see http://icheck.fronteed.com/#skin-line
+        if (icheck.indexOf('line') === 0) {
+          var $label = $input.parent().find('label[for="' + $input.attr('id') + '"]');
+
+          // Set insert with label text.
+          options.insert = '<div class="icheck_line-icon"></div>' + $label.text();
+
+          // Make sure checkbox is outside the label and then remove the label.
+          $label.insertAfter($input).remove();
+        }
+
+        $input.addClass('js-webform-icheck')
           .iCheck(options)
           // @see https://github.com/fronteed/iCheck/issues/244
           .on('ifChecked', function (e) {
@@ -49,6 +76,10 @@
    */
   Drupal.behaviors.webformICheckTableSelectAll = {
     attach: function (context) {
+      if (!$.fn.iCheck) {
+        return;
+      }
+
       $('table[data-webform-icheck] th.select-all').bind('DOMNodeInserted', function () {
         $(this).unbind('DOMNodeInserted');
         $(this).find('input[type="checkbox"]').each(function () {
@@ -76,12 +107,15 @@
    *
    * @see core/misc/states.js
    */
-  $(document).on('state:disabled', function (e) {
-    if ($(e.target).hasClass('.js-webform-icheck')) {
-      $(e.target).iCheck(e.value ? 'disable' : 'enable');
-    }
+  if ($.fn.iCheck) {
+    $(document).on('state:disabled', function (e) {
+      if ($(e.target).hasClass('.js-webform-icheck')) {
+        $(e.target).iCheck(e.value ? 'disable' : 'enable');
+      }
 
-    $(e.target).iCheck(e.value ? 'disable' : 'enable');
-  });
+      $(e.target).iCheck(e.value ? 'disable' : 'enable');
+    });
+  }
+
 
 })(jQuery, Drupal);

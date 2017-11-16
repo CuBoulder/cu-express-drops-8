@@ -2,8 +2,6 @@
 
 namespace Drupal\webform\Plugin\Field\FieldType;
 
-use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
@@ -75,7 +73,7 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
           'length' => 20,
         ],
         'close' => [
-          'description' => 'The open date/time.',
+          'description' => 'The close date/time.',
           'type' => 'varchar',
           'length' => 20,
         ],
@@ -106,31 +104,6 @@ class WebformEntityReferenceItem extends EntityReferenceItem {
       ->setLabel(t('Close value'));
 
     return $properties;
-  }
-
-  /**
-   * Get an entity's webform field name.
-   *
-   * @param \Drupal\Core\Entity\EntityInterface $entity
-   *   A fieldable content entity.
-   *
-   * @return string
-   *   The name of the webform field or an empty string.
-   */
-  public static function getEntityWebformFieldName(EntityInterface $entity = NULL) {
-    if ($entity === NULL || !method_exists($entity, 'hasField')) {
-      return '';
-    }
-
-    if ($entity instanceof ContentEntityInterface) {
-      $fields = $entity->getFieldDefinitions();
-      foreach ($fields as $field_name => $field_definition) {
-        if ($field_definition->getType() == 'webform') {
-          return $field_name;
-        }
-      }
-    }
-    return '';
   }
 
   /**

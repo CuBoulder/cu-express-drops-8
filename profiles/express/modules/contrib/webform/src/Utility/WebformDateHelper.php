@@ -18,8 +18,8 @@ class WebformDateHelper {
    *   (optional) The data format to use.
    * @param string $format
    *   (optional) If $type is 'custom', a PHP date format string suitable for
-   *   element to date(). Use a backslash to escape ordinary text, so it does not
-   *   get interpreted as date format characters.
+   *   element to date(). Use a backslash to escape ordinary text, so it does
+   *   not get interpreted as date format characters.
    * @param string|null $timezone
    *   (optional) Time zone identifier, as described at
    *   http://php.net/manual/timezones.php Defaults to the time zone used to
@@ -51,6 +51,24 @@ class WebformDateHelper {
    */
   public static function formatStorage(DrupalDateTime $date) {
     return $date->format(DATETIME_DATETIME_STORAGE_FORMAT);
+  }
+
+  /**
+   * Check if date/time string is using a valid date/time format.
+   *
+   * @param string $time
+   *   A date/time string.
+   * @param string $format
+   *   Format accepted by date().
+   *
+   * @return bool
+   *   TRUE is $time is in the accepted format.
+   *
+   * @see http://stackoverflow.com/questions/19271381/correctly-determine-if-date-string-is-a-valid-date-in-that-format
+   */
+  public static function isValidDateFormat($time, $format = 'Y-m-d') {
+    $datetime = \DateTime::createFromFormat($format, $time);
+    return ($datetime && $datetime->format($format) === $time);
   }
 
 }
